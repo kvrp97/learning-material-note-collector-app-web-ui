@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 export default function LogIn() {
 
@@ -26,19 +27,26 @@ export default function LogIn() {
                 // handle success
                 console.log(response);
                 if (response.data.password === password) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: "'You've been logged in successfully'",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                     navigate('/note');
                 } else {
-                    return alert('Please enter your valid email address and password');
+                    // return alert('Please enter your valid email address and password');
+                    Swal.fire({
+                        position: 'top',
+                        title: 'Please enter a valid email address and password',
+                    })
                 }
             })
             .catch(function (error) {
                 // handle error
                 console.log(error);
-            })
-            .finally(function () {
-                // always executed
             });
-
     }
 
     return (
