@@ -16,37 +16,42 @@ export default function LogIn() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axios.get('http://localhost:8090/api/v1/user/get-user',
-            {
-                params: {
-                    userName: userName,
+        if (userName.trim().length > 0 && password.trim().length > 0) {
+            axios.get('http://localhost:8090/api/v1/user/get-user',
+                {
+                    params: {
+                        userName: userName,
+                    }
                 }
-            }
-        )
-            .then(function (response) {
-                // handle success
-                console.log(response);
-                if (response.data.password === password) {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: "'You've been logged in successfully'",
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    navigate('/note');
-                } else {
-                    // return alert('Please enter your valid email address and password');
-                    Swal.fire({
-                        position: 'top',
-                        title: 'Please enter a valid email address and password',
-                    })
-                }
-            })
-            .catch(function (error) {
-                // handle error
-                console.log(error);
-            });
+            )
+                .then(function (response) {
+                    // handle success
+                    console.log(response);
+                    if (response.data.password === password) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: "'You've been logged in successfully'",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate('/note');
+                    } else {
+                        // return alert('Please enter your valid email address and password');
+                        Swal.fire({
+                            position: 'top',
+                            title: 'Please enter a valid email address and password',
+                        })
+                    }
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                });
+        } else {
+            Swal.fire('Please complete the login details');
+        }
+
     }
 
     return (

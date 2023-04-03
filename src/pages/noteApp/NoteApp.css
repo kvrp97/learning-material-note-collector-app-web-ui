@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+}
+
+.header{
+    position: relative;
+    margin-top: 0;
+    width: 100%;
+    height: 10rem;
+    background-color: #dbf4ff;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+h2{
+    color: #7d80a6;
+    padding: 0.3rem;
+}
+
+.note-icon{
+    margin-right: 0.5rem;
+    margin-left: -0.4rem;
+}
+
+.search{
+    width: 60%;    
+}
+
+.btn-contain{
+    margin-top: 0.5rem;
+}
