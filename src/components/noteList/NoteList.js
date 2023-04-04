@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Note from '../note/Note'
 import '../noteList/NoteList.css'
-// import AddNote from '../addNote/AddNote';
 import axios from 'axios';
 
 export default function NoteList() {
