@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Note from '../note/Note'
 import '../noteList/NoteList.css'
 // import AddNote from '../addNote/AddNote';
@@ -10,7 +10,7 @@ export default function NoteList() {
 
   useEffect(() => {
     loadAllNotes();
-  },[])
+  }, [])
 
   const loadAllNotes = () => {
     axios.get('http://localhost:8090/api/v1/note/get-all-notes')
@@ -33,8 +33,9 @@ export default function NoteList() {
       {/* <button onClick={loadAllNotes}>loadAllNotes</button> */}
       <div className='note-container'>
 
-        {notes.map((note) =>
-          <Note id={note.id} title={note.title} description={note.description} />
+        {notes.map((note, index) => {
+          return <Note id={note.id} title={note.title} description={note.description} key={index}/>
+        }
         )}
 
         {/* <AddNote /> */}

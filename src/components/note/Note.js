@@ -6,17 +6,17 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function Note({ id, title, description }) { 
+export default function Note(props) {
 
   return (
     <>
-      <Card id={id} sx={{ maxWidth: 345, minWidth: 310 }} className='note-item'>
+      <Card id={props.id} sx={{ maxWidth: 345, minWidth: 310 }} className='note-item'>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">                               
-            {title}
+          <Typography gutterBottom variant="h5" component="div">
+            {props.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {description}
+            {props.description}
           </Typography>
         </CardContent>
         <CardActions>
