@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-
 import TextField from '@mui/material/TextField';
-
 import '../addNote/AddNote.css'
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute',
@@ -22,6 +21,38 @@ const style = {
 };
 
 export default function AddNote() {
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+
+  const saveNewNote = () => {
+
+    if (title.trim().length > 0 || description.trim().length > 0) {
+      axios.post('http://localhost:8090/api/v1/note/save', {
+        title: title,
+        description: description,
+      })
+        .then(function (response) {
+          console.log(response);
+          Swal.fire({
+            position: 'bottom',
+            icon: 'success',
+            title: 'Note saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(function () {
+          handleClose();
+        });
+
+    } else {
+      Swal.fire('Please add a title or description');
+    }
+  }
 
   const [open, setOpen] = useState(false);
 
@@ -39,10 +70,19 @@ export default function AddNote() {
       >
         <Box sx={style}>
           <div className='new-margins'>
-            <TextField sx={{ width: "100%" }} id="outlined-basic" label="Title" variant="outlined" />
+            <TextField
+              required
+              value={title}
+              onChange={(e) => { setTitle(e.target.value) }}
+              sx={{ width: "100%" }}
+              id="outlined-basic"
+              label="Title"
+              variant="outlined" />
           </div>
           <div className='new-margins'>
             <TextField
+              value={description}
+              onChange={(e) => { setDescription(e.target.value) }}
               sx={{ width: "100%" }}
               id="outlined-textarea"
               label="Description"
@@ -51,8 +91,8 @@ export default function AddNote() {
             />
           </div>
           <div className='btns'>
-            <Button sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
-            <Button sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
+            <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
+            <Button onClick={handleClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
           </div>
         </Box>
       </Modal>
