@@ -20,39 +20,41 @@ const style = {
   p: 4,
 };
 
-export default function AddNote({ open, handleClose }) {
+export default function AddNote(props) { 
+
+  const { open, handleClose } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
   const saveNewNote = () => {
-
     if (title.trim().length > 0 || description.trim().length > 0) {
       axios.post('http://localhost:8090/api/v1/note/save', {
         title: title,
         description: description,
       })
         .then(function (response) {
-          console.log(response);
+          // console.log(response);          
           Swal.fire({
             position: 'bottom',
             icon: 'success',
             title: 'Note saved',
             showConfirmButton: false,
             timer: 1500
-          })
+          })                   
         })
         .catch(function (error) {
           console.log(error);
         })
         .finally(()=>{
-          onClose();
+          onClose();          
         });
 
     } else {
       Swal.fire('Please add a title or description');
     }
   }
+
 
   const onClose = ()=>{
     setTitle('');

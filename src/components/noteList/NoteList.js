@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Note from '../note/Note'
 import '../noteList/NoteList.css'
 import axios from 'axios';
+import AddNote from '../addNote/AddNote';
 
 export default function NoteList() {
 
@@ -35,6 +36,8 @@ export default function NoteList() {
         }
         )}
       </div>
+
+      <AddNote open={false} load={loadAllNotes} />
     </>
   )
 }
