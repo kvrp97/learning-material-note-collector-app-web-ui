@@ -9,11 +9,10 @@ import AddNote from '../../components/addNote/AddNote';
 
 export default function NoteApp() {
 
-  const [clicked, setClicked] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  const toggleClicked = ()=>{
-    setClicked(!clicked);
-    console.log(clicked);
+  const handleClose = () => {
+    setOpen(!open);
   }
 
   return (
@@ -24,13 +23,13 @@ export default function NoteApp() {
           <TextField className='search' id="outlined-basic" label={<SearchIcon />} variant="outlined" placeholder='Search...' />
         </div>
         <div className='btn-contain'>
-          <Button onClick={toggleClicked} variant="contained"><NoteAddIcon className='note-icon' />New Note</Button>
+          <Button onClick={() => setOpen(true)} variant="contained"><NoteAddIcon className='note-icon' />New Note</Button>
         </div>
       </div>
 
       <NoteList />
 
-      <AddNote/>
+      <AddNote open={open}  handleClose={handleClose}/>
     </div>
   )
 }

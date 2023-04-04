@@ -20,7 +20,7 @@ const style = {
   p: 4,
 };
 
-export default function AddNote() {
+export default function AddNote({ open, handleClose }) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -45,8 +45,8 @@ export default function AddNote() {
         .catch(function (error) {
           console.log(error);
         })
-        .finally(function () {
-          handleClose();
+        .finally(()=>{
+          onClose();
         });
 
     } else {
@@ -54,14 +54,14 @@ export default function AddNote() {
     }
   }
 
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const onClose = ()=>{
+    setTitle('');
+    setDescription('');
+    handleClose();    
+  }
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -92,7 +92,7 @@ export default function AddNote() {
           </div>
           <div className='btns'>
             <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
-            <Button onClick={handleClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
+            <Button onClick={onClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
           </div>
         </Box>
       </Modal>
