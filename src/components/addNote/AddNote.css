@@ -1,0 +1,8 @@
+.btns {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.new-margins{
+    margin-bottom: 1rem;
+}

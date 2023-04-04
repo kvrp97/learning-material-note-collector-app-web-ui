@@ -10,7 +10,7 @@ export default function Note(props) {
 
   return (
     <>
-      <Card id={props.id} sx={{ maxWidth: 345, minWidth: 310 }} className='note-item'>
+      <Card id={props.id} sx={{ minWidth: 350 }} className='note-item'>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {props.title}
