@@ -27,11 +27,11 @@ export default function Note(props) {
           }
         })
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             if (response.data === true){
               Swal.fire(
                 'Deleted!',
-                'Your file has been deleted.',
+                'Your note has been deleted.',
                 'success'
               )
             }
@@ -45,7 +45,7 @@ export default function Note(props) {
             })
           })
           .finally(function () {
-            
+
           });
       }
     })
