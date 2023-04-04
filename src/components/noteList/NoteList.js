@@ -29,15 +29,11 @@ export default function NoteList() {
 
   return (
     <>
-      {/* <button onClick={loadAllNotes}>loadAllNotes</button> */}
       <div className='note-container'>
-
         {notes.map((note, index) => {
-          return <Note id={note.id} title={note.title} description={note.description} key={index}/>
+          return <Note id={note.id} title={note.title} description={note.description} key={index} />
         }
         )}
-
-        {/* <AddNote /> */}
       </div>
     </>
   )
