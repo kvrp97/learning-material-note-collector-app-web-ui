@@ -12,6 +12,8 @@ import AddNote from '../../components/addNote/AddNote';
 export default function Note(props) {
 
   const { id, title, description } = props;
+  const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   // const [id, setId] = useState(props.id);
   // const [title, setTitle] = useState(props.title);
@@ -38,7 +40,7 @@ export default function Note(props) {
           .then((response) => {
             // console.log(response.data);
             if (response.data === true) {
-              props.del(response.data);
+              props.del(response.data);   // del props' state changed for load all the notes
               Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -62,10 +64,19 @@ export default function Note(props) {
     })
   }
 
-  // handled the edit feature
-  const [open, setOpen] = useState(false);
+  const handleDelete = () => {
+    setEdit(false);
+    deleteNote();
+  }
+
+  // handled the edit feature--------- 
+  
+  // set Edit prop true for add note 
+  // populate the values to add note form
+  // create edit function in add note component
 
   const handleEdit = () => {
+    setEdit(true);
 
     axios.get('http://localhost:8090/api/v1/note/get-by-id', {
       params: {
@@ -83,7 +94,7 @@ export default function Note(props) {
       .finally(function () {
         // always executed
       });
-
+    
     setOpen(true);    // to open the addNote form
   }
 
@@ -104,11 +115,11 @@ export default function Note(props) {
         </CardContent>
         <CardActions>
           <Button onClick={handleEdit} size="small">Edit</Button>
-          <Button onClick={deleteNote} size="small">Delete</Button>
+          <Button onClick={handleDelete} size="small">Delete</Button>
         </CardActions>
       </Card>
 
-      <AddNote open={open} handleClose={handleClose} />
+      <AddNote open={open} edit={edit} handleClose={handleClose} />
     </>
   )
 }
