@@ -6,6 +6,7 @@ import TextField from '@mui/material/TextField';
 import '../addNote/AddNote.css'
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import NoteList from '../noteList/NoteList';
 
 const style = {
   position: 'absolute',
@@ -47,7 +48,11 @@ export default function AddNote(props) {
           console.log(error);
         })
         .finally(()=>{
-          onClose();          
+          onClose(); 
+          // window.location.reload();  
+          setTimeout(() => {
+            window.location.reload(NoteList);
+          }, 1500);       
         });
 
     } else {

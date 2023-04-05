@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import NoteList from '../noteList/NoteList';
 
 export default function Note(props) {
 
@@ -21,20 +22,25 @@ export default function Note(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete('http://localhost:8090/api/v1/note/delete',{
-          params:{
+        axios.delete('http://localhost:8090/api/v1/note/delete', {
+          params: {
             noteId: props.id
           }
         })
           .then((response) => {
             // console.log(response.data);
-            if (response.data === true){
-              Swal.fire(
-                'Deleted!',
-                'Your note has been deleted.',
-                'success'
-              )
+            if (response.data === true) {
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Your note has been deleted',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
+            setTimeout(() => {
+              window.location.reload(NoteList);
+            }, 1500);
           })
           .catch(function (error) {
             console.log(error);
@@ -45,7 +51,6 @@ export default function Note(props) {
             })
           })
           .finally(function () {
-
           });
       }
     })
