@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import '../addNote/AddNote.css'
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import NoteList from '../noteList/NoteList';
 
 const style = {
   position: 'absolute',
@@ -21,9 +20,9 @@ const style = {
   p: 4,
 };
 
-export default function AddNote(props) { 
+export default function AddNote(props) {
 
-  const { open, handleClose } = props;
+  const { open, handleClose, save } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -35,24 +34,24 @@ export default function AddNote(props) {
         description: description,
       })
         .then(function (response) {
-          // console.log(response);          
+          // console.log(response);
+          save(response.data.id);
           Swal.fire({
             position: 'bottom',
             icon: 'success',
             title: 'Note saved',
             showConfirmButton: false,
             timer: 1500
-          })                   
+          })
         })
         .catch(function (error) {
           console.log(error);
         })
-        .finally(()=>{
-          onClose(); 
-          // window.location.reload();  
-          setTimeout(() => {
-            window.location.reload(NoteList);
-          }, 1500);       
+        .finally(() => {
+          onClose();           
+          // setTimeout(() => {
+          //   window.location.reload(NoteList);
+          // }, 1500);       
         });
 
     } else {
@@ -60,11 +59,15 @@ export default function AddNote(props) {
     }
   }
 
-
-  const onClose = ()=>{
+  const onClose = () => {
     setTitle('');
     setDescription('');
-    handleClose();    
+    handleClose();
+  }
+
+  const handleSave = () => {
+    saveNewNote();
+
   }
 
   return (
@@ -98,7 +101,7 @@ export default function AddNote(props) {
             />
           </div>
           <div className='btns'>
-            <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
+            <Button onClick={handleSave} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
             <Button onClick={onClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
           </div>
         </Box>

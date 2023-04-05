@@ -10,9 +10,14 @@ import AddNote from '../../components/addNote/AddNote';
 export default function NoteApp() {
 
   const [open, setOpen] = useState(false);
+  const [newNote, setNewNote] = useState(Number);
 
   const handleClose = () => {
     setOpen(!open);
+  }
+
+  const saveNew = (obj) => {    
+    setNewNote(obj);    
   }
 
   return (
@@ -27,9 +32,9 @@ export default function NoteApp() {
         </div>
       </div>
 
-      <NoteList />
+      <NoteList new={newNote}/>
 
-      <AddNote open={open}  handleClose={handleClose}/>
+      <AddNote open={open}  handleClose={handleClose} save={saveNew}/>
     </div>
   )
 }
