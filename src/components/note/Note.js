@@ -11,6 +11,14 @@ import AddNote from '../../components/addNote/AddNote';
 
 export default function Note(props) {
 
+  const { id, title, description } = props;
+
+  // const [id, setId] = useState(props.id);
+  // const [title, setTitle] = useState(props.title);
+  // const [description, setDescription] = useState(props.description);
+
+
+
   const deleteNote = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -24,7 +32,7 @@ export default function Note(props) {
       if (result.isConfirmed) {
         axios.delete('http://localhost:8090/api/v1/note/delete', {
           params: {
-            noteId: props.id
+            noteId: id
           }
         })
           .then((response) => {
@@ -58,6 +66,24 @@ export default function Note(props) {
   const [open, setOpen] = useState(false);
 
   const handleEdit = () => {
+
+    axios.get('http://localhost:8090/api/v1/note/get-by-id', {
+      params: {
+        noteId: id,
+      }
+    })
+      .then(function (response) {
+        // handle success
+        console.log(response);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+
     setOpen(true);    // to open the addNote form
   }
 
@@ -67,13 +93,13 @@ export default function Note(props) {
 
   return (
     <>
-      <Card id={props.id} sx={{ minWidth: 350 }} className='note-item'>
+      <Card id={id} sx={{ minWidth: 350 }} className='note-item'>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {props.title}
+            {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {props.description}
+            {description}
           </Typography>
         </CardContent>
         <CardActions>
@@ -82,7 +108,7 @@ export default function Note(props) {
         </CardActions>
       </Card>
 
-      <AddNote open={open} handleClose={handleClose}/>
+      <AddNote open={open} handleClose={handleClose} />
     </>
   )
 }
