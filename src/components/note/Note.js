@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 import axios from 'axios';
-// import NoteList from '../noteList/NoteList';
 
 export default function Note(props) {
 
@@ -30,6 +29,7 @@ export default function Note(props) {
           .then((response) => {
             // console.log(response.data);
             if (response.data === true) {
+              props.del(response.data);
               Swal.fire({
                 position: 'center',
                 icon: 'success',
@@ -38,9 +38,6 @@ export default function Note(props) {
                 timer: 1500
               })
             }
-            // setTimeout(() => {
-            //   window.location.reload(NoteList);
-            // }, 1500);
           })
           .catch(function (error) {
             console.log(error);
