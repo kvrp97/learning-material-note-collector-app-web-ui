@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../note/Note.css'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 import axios from 'axios';
+import AddNote from '../../components/addNote/AddNote';
 
 export default function Note(props) {
 
@@ -53,6 +54,17 @@ export default function Note(props) {
     })
   }
 
+  // handled the edit feature
+  const [open, setOpen] = useState(false);
+
+  const handleEdit = () => {
+    setOpen(true);    // to open the addNote form
+  }
+
+  const handleClose = () => {
+    setOpen(!open);
+  }
+
   return (
     <>
       <Card id={props.id} sx={{ minWidth: 350 }} className='note-item'>
@@ -65,10 +77,12 @@ export default function Note(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Edit</Button>
+          <Button onClick={handleEdit} size="small">Edit</Button>
           <Button onClick={deleteNote} size="small">Delete</Button>
         </CardActions>
       </Card>
+
+      <AddNote open={open} handleClose={handleClose}/>
     </>
   )
 }
