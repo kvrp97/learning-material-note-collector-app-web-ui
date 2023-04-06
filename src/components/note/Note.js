@@ -64,10 +64,6 @@ export default function Note(props) {
     })
   }
 
-  const handleDelete = () => {
-    setEdit(false);
-    deleteNote();
-  }
 
   // handled the edit feature--------- 
   
@@ -115,7 +111,7 @@ export default function Note(props) {
         </CardContent>
         <CardActions>
           <Button onClick={handleEdit} size="small">Edit</Button>
-          <Button onClick={handleDelete} size="small">Delete</Button>
+          <Button onClick={deleteNote} size="small">Delete</Button>
         </CardActions>
       </Card>
 
