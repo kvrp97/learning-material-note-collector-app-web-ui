@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -8,105 +8,115 @@ import '../updateNote/UpdateNote.css'
 // import Swal from 'sweetalert2'
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '65vw',
-  height: '60vh',
-  bgcolor: 'background.paper',
-  border: '2px solid #7d80a6',
-  boxShadow: 24,
-  p: 4,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '65vw',
+    height: '60vh',
+    bgcolor: 'background.paper',
+    border: '2px solid #7d80a6',
+    boxShadow: 24,
+    p: 4,
 };
 
 export default function UpdateNote(props) {
 
-  const { id, popupTitle, popupDescription, open, handleClose, edit } = props;
-
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-
-  const updateNote = () => {
-    console.log('update function is called');
-    console.log(edit);
-    console.log(id);
-    console.log(popupTitle);
-    console.log(popupDescription);
+    const { id, popupTitle, popupDescription, open, handleClose, edit } = props;
     
-    // if (title.trim().length > 0 || description.trim().length > 0) {
-    //   axios.post('http://localhost:8090/api/v1/note/save', {
-    //     title: title,
-    //     description: description,
-    //   })
-    //     .then(function (response) {
-    //       // console.log(response);
-    //     //   save(response.data.id);
-    //       Swal.fire({
-    //         position: 'bottom',
-    //         icon: 'success',
-    //         title: 'Note saved',
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //       })
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-    //     .finally(() => {
-    //       onClose();
-    //       // setTimeout(() => {
-    //       //   window.location.reload(NoteList);
-    //       // }, 1500);       
-    //     });
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
 
-    // } else {
-    //   Swal.fire('Please add a title or description');
-    // }
-  }
+    useEffect(() =>{
+        setTitle(popupTitle);
+        setDescription(popupDescription);
+    },[edit, popupTitle, popupDescription]);
 
-  const onClose = () => {
-    setTitle('');
-    setDescription('');
-    handleClose();
-  }
+    useEffect(() => {
+        setTitle(title);
+        setDescription(description);
+    }, [title , description]);
 
-  return (
-    <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div className='new-margins'>
-            <TextField
-              required
-              value={title}
-              onChange={(e) => { setTitle(e.target.value) }}
-              sx={{ width: "100%" }}
-              id="outlined-basic"
-              label="Title"
-              variant="outlined" />
-          </div>
-          <div className='new-margins'>
-            <TextField
-              value={description}
-              onChange={(e) => { setDescription(e.target.value) }}
-              sx={{ width: "100%" }}
-              id="outlined-textarea"
-              label="Description"
-              placeholder="Description"
-              multiline
-            />
-          </div>
-          <div className='btns'>
-            <Button onClick={updateNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
-            <Button onClick={onClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
-          </div>
-        </Box>
-      </Modal>
-    </div>
-  )
+    const updateNote = () => {
+        console.log('update function is called');
+        console.log(edit);
+        console.log(id);
+        console.log(title);
+        console.log(description);
+
+        // if (title.trim().length > 0 || description.trim().length > 0) {
+        //   axios.post('http://localhost:8090/api/v1/note/save', {
+        //     title: title,
+        //     description: description,
+        //   })
+        //     .then(function (response) {
+        //       // console.log(response);
+        //     //   save(response.data.id);
+        //       Swal.fire({
+        //         position: 'bottom',
+        //         icon: 'success',
+        //         title: 'Note saved',
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //       })
+        //     })
+        //     .catch(function (error) {
+        //       console.log(error);
+        //     })
+        //     .finally(() => {
+        //       onClose();
+        //       // setTimeout(() => {
+        //       //   window.location.reload(NoteList);
+        //       // }, 1500);       
+        //     });
+
+        // } else {
+        //   Swal.fire('Please add a title or description');
+        // }
+    }
+
+    const onClose = () => {
+        setTitle(title);
+        setDescription(description);
+        handleClose();
+    }
+
+    return (
+        <div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div className='new-margins'>
+                        <TextField
+                            required
+                            value={title}
+                            onChange={(e) => { setTitle(e.target.value) }}
+                            sx={{ width: "100%" }}
+                            id="outlined-basic"
+                            label="Title"
+                            variant="outlined" />
+                    </div>
+                    <div className='new-margins'>
+                        <TextField
+                            value={description}
+                            onChange={(e) => { setDescription(e.target.value) }}
+                            sx={{ width: "100%" }}
+                            id="outlined-textarea"
+                            label="Description"
+                            placeholder="Description"
+                            multiline
+                        />
+                    </div>
+                    <div className='btns'>
+                        <Button onClick={updateNote} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>
+                        <Button onClick={onClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
+                    </div>
+                </Box>
+            </Modal>
+        </div>
+    )
 }
