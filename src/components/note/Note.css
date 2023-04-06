@@ -1,3 +1,42 @@
 .note-item {
-    margin: 1rem;
+    background-color: rgb(185, 220, 254);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 320px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.icon{
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50px;    
+}
+
+.icon:hover{
+    cursor: pointer;
+    background-color: #7daaff;
+    color: white;
+}
+
+.note-content{
+
+}
+
+.title{
+
+}
+
+.description{
+    margin: 0.5rem;
+}
+
+.footer-container{
+    display: flex;
+    justify-content: space-between;
 }

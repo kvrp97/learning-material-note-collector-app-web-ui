@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
 import '../note/Note.css'
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import UpdateNote from '../../components/updateNote/UpdateNote';
@@ -71,20 +68,25 @@ export default function Note(props) {
 
   return (
     <>
-      <Card id={id} sx={{ minWidth: 350 }} className='note-item'>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button onClick={handleEdit} size="small">Edit</Button>
-          <Button onClick={deleteNote} size="small">Delete</Button>
-        </CardActions>
-      </Card>
+      <div id={id} className='note-item'>
+        <div className='note-content'>
+          <div className='title'>
+            <h4>{title}</h4>
+          </div>
+          <div className='description'>
+            <p>{description}</p>
+          </div>
+        </div>
+        <div className='footer-container'>
+          <div>
+            {/* <small>date</small> */}
+          </div>
+          <div className='icon-container'>
+            <EditIcon className='icon' onClick={handleEdit} />
+            <DeleteForeverIcon className='icon' onClick={deleteNote} />
+          </div>
+        </div>
+      </div>
 
       <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} edit={edit} handleClose={handleClose} />
     </>
