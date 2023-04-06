@@ -10,14 +10,14 @@ import AddNote from '../../components/addNote/AddNote';
 export default function NoteApp() {
 
   const [open, setOpen] = useState(false);
-  const [newNote, setNewNote] = useState(Number);
+  const [newNote, setNewNote] = useState(0);
 
   const handleClose = () => {
     setOpen(!open);
   }
 
-  const saveNew = (obj) => {    
-    setNewNote(obj);    
+  const saveNew = () => {    
+    setNewNote(newNote + 1);    
   }
 
   return (
