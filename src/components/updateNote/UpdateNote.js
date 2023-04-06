@@ -25,7 +25,7 @@ export default function UpdateNote(props) {
     const { id, popupTitle, popupDescription, open, handleClose, update } = props;
 
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState('');    
 
     useEffect(() => {
         setTitle(popupTitle);
@@ -37,6 +37,12 @@ export default function UpdateNote(props) {
         setDescription(description);
     }, [title, description]);
 
+    const onClose = () => { 
+        setTitle(popupTitle);
+        setDescription(popupDescription);       
+        handleClose();
+    }
+
     const updateNote = () => {
         console.log('update function is called');
 
@@ -47,7 +53,7 @@ export default function UpdateNote(props) {
                 description: description,
             })
                 .then(function (response) {
-                    // console.log(response);
+                    // console.log(response.data);                    
                     update();
                     Swal.fire({
                         position: 'bottom',
@@ -67,12 +73,6 @@ export default function UpdateNote(props) {
         } else {
             Swal.fire('Please add a title or description');
         }
-    }
-
-    const onClose = () => {
-        setTitle(title);
-        setDescription(description);
-        handleClose();
     }
 
     return (
