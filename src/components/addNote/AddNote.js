@@ -29,35 +29,35 @@ export default function AddNote(props) {
 
   const saveNewNote = () => {
     console.log('save function is called');
-    // if (title.trim().length > 0 || description.trim().length > 0) {
-    //   axios.post('http://localhost:8090/api/v1/note/save', {
-    //     title: title,
-    //     description: description,
-    //   })
-    //     .then(function (response) {
-    //       // console.log(response);
-    //       save(response.data.id);
-    //       Swal.fire({
-    //         position: 'bottom',
-    //         icon: 'success',
-    //         title: 'Note saved',
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //       })
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-    //     .finally(() => {
-    //       onClose();           
-    //       // setTimeout(() => {
-    //       //   window.location.reload(NoteList);
-    //       // }, 1500);       
-    //     });
+    if (title.trim().length > 0 || description.trim().length > 0) {
+      axios.post('http://localhost:8090/api/v1/note/save', {
+        title: title,
+        description: description,
+      })
+        .then(function (response) {
+          // console.log(response);
+          save(response.data.id);
+          Swal.fire({
+            position: 'bottom',
+            icon: 'success',
+            title: 'Note saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(() => {
+          onClose();           
+          // setTimeout(() => {
+          //   window.location.reload(NoteList);
+          // }, 1500);       
+        });
 
-    // } else {
-    //   Swal.fire('Please add a title or description');
-    // }
+    } else {
+      Swal.fire('Please add a title or description');
+    }
   }
 
   const updateNote = () => {
