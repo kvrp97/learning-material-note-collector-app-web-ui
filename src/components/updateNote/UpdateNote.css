@@ -1,0 +1,12 @@
+.btns {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.new-margins{
+    margin-bottom: 1rem;
+}
+
+.swal2-container {
+    z-index: 2000;
+}

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2'
 import axios from 'axios';
-import AddNote from '../../components/addNote/AddNote';
+import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
@@ -15,12 +15,7 @@ export default function Note(props) {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
-  // const [id, setId] = useState(props.id);
-  // const [title, setTitle] = useState(props.title);
-  // const [description, setDescription] = useState(props.description);
-
-
-
+  // delete feature
   const deleteNote = () => {
     Swal.fire({
       title: 'Are you sure?',
@@ -64,33 +59,9 @@ export default function Note(props) {
     })
   }
 
-
   // handled the edit feature--------- 
-  
-  // set Edit prop true for add note 
-  // populate the values to add note form
-  // create edit function in add note component
-
   const handleEdit = () => {
     setEdit(true);
-
-    axios.get('http://localhost:8090/api/v1/note/get-by-id', {
-      params: {
-        noteId: id,
-      }
-    })
-      .then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-    
     setOpen(true);    // to open the addNote form
   }
 
@@ -115,7 +86,7 @@ export default function Note(props) {
         </CardActions>
       </Card>
 
-      <AddNote open={open} edit={edit} handleClose={handleClose} />
+      <UpdateNote id={id} popupTitle={title} popupDescription={description} open={open} edit={edit} handleClose={handleClose} />
     </>
   )
 }
