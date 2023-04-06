@@ -7,9 +7,14 @@ export default function NoteList(props) {
 
   const [notes, setNotes] = useState([{}]);  
   const [del, setDel] = useState(false);  
+  const [update, setUpdate] = useState(0);  
 
   const deleteToggle = ()=>{
     setDel(!del);
+  }
+
+  const handleUpdate = ()=>{
+    setUpdate(update + 1);
   }
 
   //initial reloading
@@ -26,6 +31,11 @@ export default function NoteList(props) {
   useEffect(() => {
     loadAllNotes();
   }, [del])
+
+  // reloading on update
+  useEffect(() => {
+    loadAllNotes();
+  }, [update])
 
   const loadAllNotes = () => {
     axios.get('http://localhost:8090/api/v1/note/get-all-notes')
@@ -47,7 +57,7 @@ export default function NoteList(props) {
     <>
       <div className='note-container'>
         {notes.map((note, index) => {
-          return <Note del={deleteToggle} id={note.id} title={note.title} description={note.description} key={index} />
+          return <Note update={handleUpdate} del={deleteToggle} id={note.id} title={note.title} description={note.description} key={index} />
         }
         )}       
       </div>

@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import '../updateNote/UpdateNote.css'
-// import axios from 'axios';
-// import Swal from 'sweetalert2'
+import axios from 'axios';
+import Swal from 'sweetalert2'
 
 const style = {
     position: 'absolute',
@@ -22,57 +22,51 @@ const style = {
 
 export default function UpdateNote(props) {
 
-    const { id, popupTitle, popupDescription, open, handleClose, edit } = props;
-    
+    const { id, popupTitle, popupDescription, open, handleClose, update } = props;
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    useEffect(() =>{
+    useEffect(() => {
         setTitle(popupTitle);
         setDescription(popupDescription);
-    },[edit, popupTitle, popupDescription]);
+    }, [update, popupTitle, popupDescription]);
 
     useEffect(() => {
         setTitle(title);
         setDescription(description);
-    }, [title , description]);
+    }, [title, description]);
 
     const updateNote = () => {
         console.log('update function is called');
-        console.log(edit);
-        console.log(id);
-        console.log(title);
-        console.log(description);
 
-        // if (title.trim().length > 0 || description.trim().length > 0) {
-        //   axios.post('http://localhost:8090/api/v1/note/save', {
-        //     title: title,
-        //     description: description,
-        //   })
-        //     .then(function (response) {
-        //       // console.log(response);
-        //     //   save(response.data.id);
-        //       Swal.fire({
-        //         position: 'bottom',
-        //         icon: 'success',
-        //         title: 'Note saved',
-        //         showConfirmButton: false,
-        //         timer: 1500
-        //       })
-        //     })
-        //     .catch(function (error) {
-        //       console.log(error);
-        //     })
-        //     .finally(() => {
-        //       onClose();
-        //       // setTimeout(() => {
-        //       //   window.location.reload(NoteList);
-        //       // }, 1500);       
-        //     });
+        if (title.trim().length > 0 || description.trim().length > 0) {
+            axios.put('http://localhost:8090/api/v1/note/update', {
+                id: id,
+                title: title,
+                description: description,
+            })
+                .then(function (response) {
+                    // console.log(response);
+                    update();
+                    Swal.fire({
+                        position: 'bottom',
+                        icon: 'success',
+                        title: 'Note updated successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(() => {
+                    onClose();
+                });
 
-        // } else {
-        //   Swal.fire('Please add a title or description');
-        // }
+        } else {
+            Swal.fire('Please add a title or description');
+        }
     }
 
     const onClose = () => {

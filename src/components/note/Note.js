@@ -11,7 +11,7 @@ import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
-  const { id, title, description } = props;
+  const { id, title, description, update } = props;
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
 
@@ -86,7 +86,7 @@ export default function Note(props) {
         </CardActions>
       </Card>
 
-      <UpdateNote id={id} popupTitle={title} popupDescription={description} open={open} edit={edit} handleClose={handleClose} />
+      <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} edit={edit} handleClose={handleClose} />
     </>
   )
 }
