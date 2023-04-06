@@ -8,7 +8,7 @@ export default function NoteList(props) {
   const [notes, setNotes] = useState([{}]);  
   const [del, setDel] = useState(false);  
 
-  const isdelete = ()=>{
+  const deleteToggle = ()=>{
     setDel(!del);
   }
 
@@ -47,7 +47,7 @@ export default function NoteList(props) {
     <>
       <div className='note-container'>
         {notes.map((note, index) => {
-          return <Note del={isdelete} id={note.id} title={note.title} description={note.description} key={index} />
+          return <Note del={deleteToggle} id={note.id} title={note.title} description={note.description} key={index} />
         }
         )}       
       </div>
