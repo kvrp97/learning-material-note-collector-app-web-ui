@@ -71,10 +71,10 @@ export default function Note(props) {
       <div id={id} className='note-item'>
         <div className='note-content'>
           <div className='title'>
-            <h4>{title}</h4>
+            {title}
           </div>
           <div className='description'>
-            <p>{description}</p>
+            {description}
           </div>
         </div>
         <div className='footer-container'>

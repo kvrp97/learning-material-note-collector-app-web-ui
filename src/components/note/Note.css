@@ -5,11 +5,12 @@
     margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
-    min-width: 320px;
+    width: 320px;
     min-height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    white-space: pre-wrap;
 }
 
 .icon{
@@ -29,11 +30,16 @@
 }
 
 .title{
-
+    width: 100%;
+    font-size: 1.2em;
+    font-weight: 600;
+    word-wrap: break-word;
 }
 
 .description{
     margin: 0.5rem;
+    font-weight: 350;
+    word-wrap: break-word;
 }
 
 .footer-container{
