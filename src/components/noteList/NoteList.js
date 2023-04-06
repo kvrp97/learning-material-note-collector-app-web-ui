@@ -25,6 +25,7 @@ export default function NoteList(props) {
   // adding a note - reloading
   useEffect(() => {
     loadAllNotes();
+    loadAllNotes();
   }, [props.new])
 
   // deleting a note - reloading
@@ -34,7 +35,7 @@ export default function NoteList(props) {
 
   // reloading on update
   useEffect(() => {
-    loadAllNotes();
+    loadAllNotes();    
   }, [update])
 
   const loadAllNotes = () => {
