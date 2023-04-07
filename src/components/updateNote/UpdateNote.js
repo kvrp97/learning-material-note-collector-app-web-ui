@@ -20,7 +20,7 @@ const style = {
     p: 4,
 };
 
-export default function UpdateNote(props) {
+export default function UpdateNote(props) {   
 
     const { id, popupTitle, popupDescription, open, handleClose, update } = props;
 
@@ -44,7 +44,14 @@ export default function UpdateNote(props) {
     }
 
     const updateNote = () => {
+
+        const date = new Date();
+        const localDate = date.toLocaleDateString();
+        const localTime = date.toLocaleTimeString();
+        const localDateTime = localDate + ' ' + localTime;
+
         console.log('update function is called');
+        console.log(localDateTime);
 
         if (title.trim().length > 0 || description.trim().length > 0) {
             axios.put('http://localhost:8090/api/v1/note/update', {
