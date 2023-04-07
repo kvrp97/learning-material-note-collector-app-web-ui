@@ -1,5 +1,5 @@
 .note-item {
-    background-color: #b9dcfe;
+    background-color: #fffade;
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 1rem;
@@ -21,7 +21,7 @@
 
 .icon:hover{
     cursor: pointer;
-    background-color: #7daaff;
+    background-color: #678e9f;
     color: white;
 }
 
