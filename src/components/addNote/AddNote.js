@@ -12,6 +12,8 @@ export default function AddNote(props) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const titleCharacterLimit = 110;
+  const descriptionCharacterLimit = 250;
 
   const saveNewNote = () => {
     console.log('save function is called');
@@ -71,21 +73,34 @@ export default function AddNote(props) {
             <TextField
               required
               value={title}
-              onChange={(e) => { setTitle(e.target.value) }}
+              onChange={(e) => {
+                if (titleCharacterLimit - e.target.value.length >= 0) {
+                  // console.log(e.target.value.length);
+                  setTitle(e.target.value);
+                }
+              }}
               sx={{ width: "100%" }}
               id="outlined-basic"
               label="Title"
-              variant="outlined" />
+              variant="outlined"
+              minRows={1}
+              multiline
+            />
           </div>
           <div className='new-margins'>
             <TextField
               value={description}
-              onChange={(e) => { setDescription(e.target.value) }}
+              onChange={(e) => {
+                if (descriptionCharacterLimit - e.target.value.length >= 0) {
+                  // console.log(e.target.value.length);
+                  setDescription(e.target.value);
+                }
+              }}
               sx={{ width: "100%" }}
               id="outlined-multiline-static"
               label="Description"
               placeholder="Description"
-              rows={6}
+              rows={5}
               multiline
             />
           </div>
