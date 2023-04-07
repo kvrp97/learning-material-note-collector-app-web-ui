@@ -55,10 +55,10 @@ export default function LogIn() {
     }
 
     return (
-        <div className='container-sign-in'>
-            <div className='form-container'>
+        <div className='container-login'>
+            <div className='form-container-login'>
                 <form className='login-form' onSubmit={handleSubmit}>
-                    <h3>Note APP</h3>
+                    <h3 className='login-title'>Note APP</h3>
                     <div>
                         <TextField
                             className='txt'
@@ -82,7 +82,10 @@ export default function LogIn() {
                         />
                     </div>
                     <br />
-                    <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
+                    <div className='login-btn-container'>
+                        <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
+
+                    </div>
                     <a className='sign-up-link' href='/sign-up'>I don't have an account? Sign Up</a>
                 </form>
             </div>

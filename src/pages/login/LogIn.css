@@ -1,25 +1,36 @@
-.container-sign-in {
+.container-login {
     display: flex;
     position: relative;
     height: 100vh;
 }
 
-.form-container {
+.form-container-login {
     margin: auto;
-    height: 15rem;
+    height: auto;
     width: 23rem;
     padding-top: 1.8rem;
-    padding-bottom: 4rem;
+    padding-bottom: 1rem;
     padding-left: 3rem;
     padding-right: 3rem;
-    border: 4px solid #a8a8a8;
+    border: 4px solid #777777;
     border-radius: 20px;
     background-color: #fffffe;
     text-align: center;
 }
 
-h3 {
-    color: rgb(93, 126, 215);
+@media only screen and (max-width: 600px) {
+    .form-container-login {
+        width: 90vw;
+        padding-top: 1.8rem;
+        padding-bottom: 1rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+        border: 2px solid #8a8c8e;
+    }
+}
+
+.login-title {
+    color: #545559;
     padding-bottom: 0.9rem;
 }
 
@@ -28,24 +39,28 @@ h3 {
 }
 
 
-.login-form{
+.login-form {
     padding-bottom: 1rem;
 }
 
-.sign-up-link{
+.sign-up-link {
     display: block;
-    padding-top: 2rem;
     font-size: small;
     text-align: end;
     color: #1d6db4;
 }
 
-.sign-up-link:hover{
+.sign-up-link:hover {
     color: #333c5a;
     font-weight: 500;
 }
 
-.login-btn{
+.login-btn {
     display: block;
-    width: 100%;    
+    width: 100%;
+
+}
+
+.login-btn-container {
+    margin-bottom: 1rem;
 }

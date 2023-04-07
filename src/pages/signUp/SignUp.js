@@ -8,17 +8,17 @@ export default function SignUp() {
     <div className='container-sign-up'>
       <div className='form-container-sign-up'>
         <form className='sign-up-form'>
-          <h3>USER SIGN UP</h3>
+          <h3 className='sign-up-title'>USER SIGN UP</h3>
           <div className='user-name'>
             <div className='name'>
               <TextField required label="First Name" variant="outlined" />
             </div>
             <div className='name'>
-              <TextField required label="Last Name" variant="outlined" /> 
+              <TextField required label="Last Name" variant="outlined" />
             </div>
           </div>
           <br />
-          <div  className='em-pswd'>
+          <div className='em-pswd'>
             <div>
               <TextField
                 className='txt'
