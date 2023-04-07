@@ -45,7 +45,7 @@ export default function UpdateNote(props) {
 
     const handleUpdate = () => {
         if (title === popupTitle && description === popupDescription) {
-            handleClose(false);
+            handleClose();
         } else {
             updateNote();
         }
