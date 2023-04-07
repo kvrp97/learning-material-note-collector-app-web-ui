@@ -43,6 +43,14 @@ export default function UpdateNote(props) {
         handleClose();
     }
 
+    const handleUpdate = () => {
+        if (title === popupTitle && description === popupDescription) {
+            handleClose(false);
+        } else {
+            updateNote();
+        }
+    }
+
     const updateNote = () => {
         console.log('update function is called');
 
@@ -111,7 +119,7 @@ export default function UpdateNote(props) {
                         />
                     </div>
                     <div className='btns'>
-                        <Button onClick={updateNote} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>
+                        <Button onClick={handleUpdate} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>
                         <Button onClick={onClose} sx={{ m: 1, display: 'block' }} variant="outlined">Close </Button>
                     </div>
                 </Box>
