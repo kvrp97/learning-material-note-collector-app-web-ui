@@ -38,6 +38,7 @@ export default function AddNote(props) {
       axios.post('http://localhost:8090/api/v1/note/save', {
         title: title,
         description: description,
+        dateTime: localDateTime,
       })
         .then(function (response) {
           // console.log(response);

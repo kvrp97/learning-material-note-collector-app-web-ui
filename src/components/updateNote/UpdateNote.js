@@ -55,6 +55,7 @@ export default function UpdateNote(props) {
                 id: id,
                 title: title,
                 description: description,
+                dateTime: localDateTime,
             })
                 .then(function (response) {
                     // console.log(response.data);                    
