@@ -12,7 +12,8 @@ export default function UpdateNote(props) {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const titleCharacterLimit = 110;
+
+    const titleCharacterLimit = 100;
     const descriptionCharacterLimit = 250;
 
     useEffect(() => {
@@ -40,13 +41,14 @@ export default function UpdateNote(props) {
     }
 
     const updateNote = () => {
-        console.log('update function is called');
-
-        const date = new Date();
-        const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-        console.log(localDateTime);
+        // console.log('update function is called');
 
         if (title.trim().length > 0 || description.trim().length > 0) {
+
+            const date = new Date();
+            const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            // console.log(localDateTime);
+
             axios.put('http://localhost:8090/api/v1/note/update', {
                 id: id,
                 title: title,
@@ -89,6 +91,7 @@ export default function UpdateNote(props) {
                         <TextField
                             required
                             value={title}
+                            placeholder="Add title..."
                             onChange={(e) => {
                                 if (titleCharacterLimit - e.target.value.length >= 0) {
                                     // console.log(e.target.value.length);
@@ -99,9 +102,10 @@ export default function UpdateNote(props) {
                             id="outlined-basic"
                             label="Title"
                             variant="outlined"
-                            minRows={1}
-                            multiline
+                            maxRows={2}
+                            
                         />
+                        <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>  
                     </div>
                     <div className='new-margins'>
                         <TextField
@@ -115,10 +119,11 @@ export default function UpdateNote(props) {
                             sx={{ width: "100%" }}
                             id="outlined-multiline-static"
                             label="Description"
-                            placeholder="Description"
+                            placeholder="Add description..."
                             rows={6}
                             multiline
                         />
+                        <small>{descriptionCharacterLimit - description.length} / {descriptionCharacterLimit}</small>
                     </div>
                     <div className='btns'>
                         <Button onClick={handleUpdate} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>

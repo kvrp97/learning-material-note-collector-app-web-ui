@@ -12,15 +12,16 @@ export default function AddNote(props) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const titleCharacterLimit = 110;
+
+  const titleCharacterLimit = 100;
   const descriptionCharacterLimit = 250;
 
   const saveNewNote = () => {
-    console.log('save function is called');
+    // console.log('save function is called');
 
     const date = new Date();
     const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-    console.log(localDateTime);
+    // console.log(localDateTime);
 
     if (title.trim().length > 0 || description.trim().length > 0) {
       axios.post('http://localhost:8090/api/v1/note/save', {
@@ -73,6 +74,7 @@ export default function AddNote(props) {
             <TextField
               required
               value={title}
+              placeholder="Add title..."
               onChange={(e) => {
                 if (titleCharacterLimit - e.target.value.length >= 0) {
                   // console.log(e.target.value.length);
@@ -83,9 +85,10 @@ export default function AddNote(props) {
               id="outlined-basic"
               label="Title"
               variant="outlined"
-              minRows={1}
-              multiline
+              maxRows={2}
+              
             />
+            <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>            
           </div>
           <div className='new-margins'>
             <TextField
@@ -99,10 +102,11 @@ export default function AddNote(props) {
               sx={{ width: "100%" }}
               id="outlined-multiline-static"
               label="Description"
-              placeholder="Description"
+              placeholder="Add description..."
               rows={5}
               multiline
             />
+            <small>{descriptionCharacterLimit - description.length} / {descriptionCharacterLimit}</small>
           </div>
           <div className='btns'>
             <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
