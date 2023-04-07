@@ -8,7 +8,7 @@ import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
-  const { id, title, description, update } = props;
+  const { id, title, description, dateTime, update } = props;
   const [open, setOpen] = useState(false);
 
   // delete feature
@@ -77,7 +77,7 @@ export default function Note(props) {
         </div>
         <div className='footer-container'>
           <div>
-            {/* <small>date</small> */}
+            <small>{dateTime}</small>
           </div>
           <div className='icon-container'>
             <EditIcon className='icon' onClick={handleEdit} />
