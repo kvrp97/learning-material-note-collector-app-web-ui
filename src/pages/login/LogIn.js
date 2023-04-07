@@ -55,7 +55,7 @@ export default function LogIn() {
     }
 
     return (
-        <div className='container'>
+        <div className='container-sign-in'>
             <div className='form-container'>
                 <form className='login-form' onSubmit={handleSubmit}>
                     <h3>Note APP</h3>
@@ -67,6 +67,7 @@ export default function LogIn() {
                             type="email"
                             value={userName}
                             onChange={(e) => { setUserName(e.target.value) }}
+                            required
                         />
                     </div><br />
                     <div>
@@ -77,10 +78,12 @@ export default function LogIn() {
                             type="password"
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
+                            required
                         />
                     </div>
                     <br />
-                    <Button type='submit' variant="contained">LogIn</Button>
+                    <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
+                    <a className='sign-up-link' href='/sign-up'>I don't have an account? Sign Up</a>
                 </form>
             </div>
         </div>

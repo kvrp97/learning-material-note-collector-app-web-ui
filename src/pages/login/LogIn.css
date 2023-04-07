@@ -1,26 +1,55 @@
-
-
-.form-container{
+.container-sign-in {
+    display: flex;
     position: relative;
+    height: 100vh;
+}
+
+.form-container {
     margin: auto;
-    margin-top: 25vh;
     height: 15rem;
-    width: 20rem;
+    width: 23rem;
     padding-top: 1.8rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    border: 2px solid rgb(12, 178, 255);
+    padding-bottom: 4rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    border: 4px solid rgb(212, 212, 212);
     border-radius: 20px;
-    background-color: rgb(239, 254, 254);
+    background-color: rgb(228, 250, 255);
     text-align: center;
 }
 
-h3{
+h3 {
     color: rgb(93, 126, 215);
     padding-bottom: 0.9rem;
 }
 
-.txt{
+.txt {
+    width: 100%;
+}
+
+
+.login-form{
+    padding-bottom: 1rem;
+}
+
+.sign-up-link{
+    display: block;
+    padding-top: 2rem;
+    font-size: small;
+    text-align: end;
+    color: #1d6db4;
+}
+
+.sign-up-link:hover{
+    color: #333c5a;
+    font-weight: 500;
+}
+
+.login-btn{
+    display: block;
     width: 100%;    
+}
+
+body{
+    background-color: #a3bec4;
 }
