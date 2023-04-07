@@ -1,9 +1,29 @@
+.add-note-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #edf8ff;
+    border: 3px solid #4b79ab;
+    border-radius: 20px;    
+    padding: 1.5rem;
+    width: 50%;
+    min-height: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    .add-note-box{        
+        width: 80vw;
+        min-height: 70%;
+    }
+}
+
 .btns {
     display: flex;
     justify-content: flex-end;
 }
 
-.new-margins{
+.new-margins {
     margin-bottom: 1rem;
 }
 
