@@ -10,7 +10,6 @@ export default function Note(props) {
 
   const { id, title, description, update } = props;
   const [open, setOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
 
   // delete feature
   const deleteNote = () => {
@@ -58,7 +57,6 @@ export default function Note(props) {
 
   // handled the edit feature--------- 
   const handleEdit = () => {
-    setEdit(true);
     setOpen(true);    // to open the addNote form
   }
 
@@ -88,7 +86,7 @@ export default function Note(props) {
         </div>
       </div>
 
-      <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} edit={edit} handleClose={handleClose} />
+      <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} handleClose={handleClose} />
     </>
   )
 }
