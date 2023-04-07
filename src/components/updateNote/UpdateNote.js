@@ -20,12 +20,12 @@ const style = {
     p: 4,
 };
 
-export default function UpdateNote(props) {   
+export default function UpdateNote(props) {
 
     const { id, popupTitle, popupDescription, open, handleClose, update } = props;
 
     const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');    
+    const [description, setDescription] = useState('');
 
     useEffect(() => {
         setTitle(popupTitle);
@@ -37,20 +37,17 @@ export default function UpdateNote(props) {
         setDescription(description);
     }, [title, description]);
 
-    const onClose = () => { 
+    const onClose = () => {
         setTitle(popupTitle);
-        setDescription(popupDescription);       
+        setDescription(popupDescription);
         handleClose();
     }
 
     const updateNote = () => {
+        console.log('update function is called');
 
         const date = new Date();
-        const localDate = date.toLocaleDateString();
-        const localTime = date.toLocaleTimeString();
-        const localDateTime = localDate + ' ' + localTime;
-
-        console.log('update function is called');
+        const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         console.log(localDateTime);
 
         if (title.trim().length > 0 || description.trim().length > 0) {

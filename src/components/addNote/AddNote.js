@@ -27,14 +27,12 @@ export default function AddNote(props) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const date = new Date();
-  const localDate = date.toLocaleDateString();
-  const localTime = date.toLocaleTimeString();
-  const localDateTime = localDate + ' ' + localTime;
-
   const saveNewNote = () => {
     console.log('save function is called');
-    console.log(localDateTime);    
+
+    const date = new Date();
+    const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    console.log(localDateTime);
 
     if (title.trim().length > 0 || description.trim().length > 0) {
       axios.post('http://localhost:8090/api/v1/note/save', {
