@@ -1,26 +1,91 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../signUp/SignUp.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Swal from 'sweetalert2'
+import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
 
 export default function SignUp() {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  // const navigate = useNavigate();
+
+  const isNotEmpty = () => {
+    if (email.trim().length > 0 && password.trim().length > 0 && firstName.trim().length > 0 && lastName.trim().length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  const clearFields = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isNotEmpty()) {
+      axios.post('http://localhost:8090/api/v1/user/save', {
+        firstName: firstName,
+        lastName: lastName,
+        emailAddress: email,
+        password: password
+      })
+        .then(function (response) {
+          console.log(response.data);
+          if (response.data) {
+            clearFields();
+            Swal.fire({
+              icon: 'success',
+              title: 'User saved successfully',
+              footer: '<a href="/">Log In</a>'
+            })
+          } else {
+            Swal.fire({
+              icon: 'info',
+              title: 'Email address already in use',
+              text: 'Use a different email address',
+            })
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+        .finally(() => {
+
+        });
+    } else {
+      Swal.fire('Please complete all the fields');
+    }
+  }
+
   return (
     <div className='container-sign-up'>
       <div className='form-container-sign-up'>
-        <form className='sign-up-form'>
+        <form className='sign-up-form' onSubmit={handleSubmit}>
           <h3 className='sign-up-title'>USER SIGN UP</h3>
           <div className='user-name'>
             <div className='name'>
-              <TextField required label="First Name" variant="outlined" />
+              <TextField value={firstName} onChange={(e) => { setFirstName(e.target.value) }} label="First Name" variant="outlined" required />
             </div>
             <div className='name'>
-              <TextField required label="Last Name" variant="outlined" />
+              <TextField value={lastName} onChange={(e) => { setLastName(e.target.value) }} label="Last Name" variant="outlined" required />
             </div>
           </div>
           <br />
           <div className='em-pswd'>
             <div>
               <TextField
+                value={email}
+                onChange={(e) => { setEmail(e.target.value) }}
                 className='txt'
                 id="outlined-email-input"
                 label="Email Address"
@@ -30,6 +95,8 @@ export default function SignUp() {
             </div><br />
             <div>
               <TextField
+                value={password}
+                onChange={(e) => { setPassword(e.target.value) }}
                 className='txt'
                 id="outlined-password-input"
                 label="Password"
@@ -38,7 +105,9 @@ export default function SignUp() {
               />
             </div>
             <br />
-            <Button className='sign-up-btn' type='submit' variant="contained">Sign Up</Button>
+            <div className='sign-up-btn-container'>
+              <Button className='sign-up-btn' type='submit' variant="contained">Sign Up</Button>
+            </div>
             <a className='login-link' href='/'>I have an account? LogIn</a>
           </div>
         </form>

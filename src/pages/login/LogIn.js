@@ -9,18 +9,18 @@ import Swal from 'sweetalert2'
 
 export default function LogIn() {
 
-    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (userName.trim().length > 0 && password.trim().length > 0) {
+        if (email.trim().length > 0 && password.trim().length > 0) {
             axios.get('http://localhost:8090/api/v1/user/get-user',
                 {
                     params: {
-                        userName: userName,
+                        email: email,
                     }
                 }
             )
@@ -65,8 +65,8 @@ export default function LogIn() {
                             id="outlined-email-input"
                             label="Email Address"
                             type="email"
-                            value={userName}
-                            onChange={(e) => { setUserName(e.target.value) }}
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value) }}
                             required
                         />
                     </div><br />
@@ -84,7 +84,6 @@ export default function LogIn() {
                     <br />
                     <div className='login-btn-container'>
                         <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
-
                     </div>
                     <a className='sign-up-link' href='/sign-up'>I don't have an account? Sign Up</a>
                 </form>

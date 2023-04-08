@@ -58,15 +58,18 @@
 
 .login-link {
     display: block;
-    padding-top: 2rem;
     font-size: small;
-    text-align: end;
+    text-align: center;
     color: #1d6db4;
 }
 
 .login-link:hover {
     color: #333c5a;
     font-weight: 500;
+}
+
+.sign-up-btn-container{
+    margin-bottom: 1rem;
 }
 
 .sign-up-btn {
