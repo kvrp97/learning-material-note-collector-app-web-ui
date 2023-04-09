@@ -108,7 +108,9 @@ export default function SignUp() {
             <div className='sign-up-btn-container'>
               <Button className='sign-up-btn' type='submit' variant="contained">Sign Up</Button>
             </div>
-            <a className='login-link' href='/'>I have an account? LogIn</a>
+            <div className='login-link-container'>
+              <a className='login-link' href='/'>I have an account? LogIn</a>
+            </div>
           </div>
         </form>
       </div>

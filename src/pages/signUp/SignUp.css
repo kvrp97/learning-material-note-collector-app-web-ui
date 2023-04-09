@@ -55,6 +55,10 @@
     width: 100%;
 }
 
+.login-link-container{
+    display: flex;
+    justify-content: center;
+}
 
 .login-link {
     display: block;

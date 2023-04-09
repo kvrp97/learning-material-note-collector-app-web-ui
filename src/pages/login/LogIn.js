@@ -2,6 +2,7 @@ import '../login/LogIn.css';
 import React from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,10 +12,12 @@ export default function LogIn() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(rememberMe);
 
         if (email.trim().length > 0 && password.trim().length > 0) {
             axios.get('http://localhost:8090/api/v1/user/get-user',
@@ -67,7 +70,7 @@ export default function LogIn() {
                             type="email"
                             value={email}
                             onChange={(e) => { setEmail(e.target.value) }}
-                            required
+                        // required
                         />
                     </div><br />
                     <div>
@@ -78,14 +81,24 @@ export default function LogIn() {
                             type="password"
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
-                            required
+                        // required
                         />
                     </div>
-                    <br />
+                    <div className='switch-container'>
+                        <Switch
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            name="remember-me"
+                            color="primary"
+                        />
+                        <span><small>Remember Me</small></span>
+                    </div>
                     <div className='login-btn-container'>
                         <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
                     </div>
-                    <a className='sign-up-link' href='/sign-up'>I don't have an account? Sign Up</a>
+                    <div className='sign-up-link-container'>
+                        <a className='sign-up-link' href='/sign-up'>I don't have an account? Sign Up</a>
+                    </div>
                 </form>
             </div>
         </div>
