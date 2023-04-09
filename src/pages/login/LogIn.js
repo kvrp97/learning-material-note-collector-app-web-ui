@@ -17,7 +17,6 @@ export default function LogIn() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(rememberMe);
 
         if (email.trim().length > 0 && password.trim().length > 0) {
             axios.get('http://localhost:8090/api/v1/user/get-user',
@@ -29,8 +28,11 @@ export default function LogIn() {
             )
                 .then(function (response) {
                     // handle success
-                    console.log(response);
+                    // console.log(response.data);
                     if (response.data.password === password) {
+                        if (rememberMe) {
+                            localStorage.setItem('isloggedIntoNotes', rememberMe);
+                        }
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -43,13 +45,16 @@ export default function LogIn() {
                         // return alert('Please enter your valid email address and password');
                         Swal.fire({
                             position: 'top',
-                            title: 'Please enter a valid email address and password',
+                            icon: 'warning',
+                            title: 'Invalid login details', 
+                            text: 'Please enter a valid email address & password'
                         })
                     }
                 })
                 .catch(function (error) {
                     // handle error
                     console.log(error);
+                    navigate('/');
                 });
         } else {
             Swal.fire('Please complete the login details');
