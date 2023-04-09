@@ -70,7 +70,7 @@ export default function LogIn() {
                             type="email"
                             value={email}
                             onChange={(e) => { setEmail(e.target.value) }}
-                        // required
+                            required
                         />
                     </div><br />
                     <div>
@@ -81,7 +81,7 @@ export default function LogIn() {
                             type="password"
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
-                        // required
+                            required
                         />
                     </div>
                     <div className='switch-container'>
@@ -91,7 +91,7 @@ export default function LogIn() {
                             name="remember-me"
                             color="primary"
                         />
-                        <span><small>Remember Me</small></span>
+                        <span className='remember-txt-span'><small>Remember Me</small></span>
                     </div>
                     <div className='login-btn-container'>
                         <Button className='login-btn' type='submit' variant="contained">LogIn</Button>
