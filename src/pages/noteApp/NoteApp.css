@@ -6,10 +6,10 @@
     position: relative;
     margin-top: 0;
     width: 100%;
-    height: 10rem;
+    height: auto;
     background-color: #dbf4ff;
     text-align: center;
-    padding-top: 1rem;
+    padding-bottom: 0.5rem;
 }
 
 h2{
@@ -23,9 +23,25 @@ h2{
 }
 
 .search{
-    width: 60%;    
+    width: 50%;    
 }
 
 .btn-contain{
     margin-top: 0.5rem;
+}
+
+.signed-user-div{
+    position: absolute;
+    right:0.3rem;
+    top: 0.3rem;
+    padding: 0.2rem;
+}
+
+.username-txt{
+    display: block;
+}
+
+.log-out-btn{
+    display: block;
+    height: 1.6rem;
 }

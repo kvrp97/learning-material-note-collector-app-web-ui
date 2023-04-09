@@ -30,9 +30,9 @@ export default function LogIn() {
                     // handle success
                     // console.log(response.data);
                     if (response.data.password === password) {
-                        if (rememberMe) {
-                            localStorage.setItem('isloggedIntoNotes', rememberMe);
-                        }
+                        localStorage.setItem('userName', response.data.firstName);
+                        localStorage.setItem('isloggedWithRemember', rememberMe);
+
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -46,7 +46,7 @@ export default function LogIn() {
                         Swal.fire({
                             position: 'top',
                             icon: 'warning',
-                            title: 'Invalid login details', 
+                            title: 'Invalid login details',
                             text: 'Please enter a valid email address & password'
                         })
                     }
