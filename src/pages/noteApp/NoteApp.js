@@ -46,10 +46,11 @@ export default function NoteApp() {
             showConfirmButton: false,
             timer: 1500            
           })
+          localStorage.setItem('loggedWithRemember',false);
           localStorage.removeItem('userName');
-          localStorage.removeItem('loggedWithRemember');
           localStorage.removeItem('logged');
           navigate('/');
+          window.location.reload();
         }
       })
     } else {
@@ -68,8 +69,8 @@ export default function NoteApp() {
             showConfirmButton: false,
             timer: 1500            
           })
+          localStorage.setItem('loggedWithRemember',false);
           localStorage.removeItem('userName');
-          localStorage.removeItem('loggedWithRemember');
           localStorage.removeItem('logged');
           navigate('/');
         }
