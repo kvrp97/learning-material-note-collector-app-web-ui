@@ -19,7 +19,7 @@ export default function NoteApp() {
   const navigate = useNavigate();
 
   let userName = localStorage.getItem('userName');
-  let isloggedWithRemember = JSON.parse(localStorage.getItem('isloggedWithRemember'));
+  let isloggedWithRemember = JSON.parse(localStorage.getItem('loggedWithRemember'));
 
   const handleClose = () => {
     setOpen(!open);
@@ -47,7 +47,8 @@ export default function NoteApp() {
             timer: 1500            
           })
           localStorage.removeItem('userName');
-          localStorage.removeItem('isloggedWithRemember');
+          localStorage.removeItem('loggedWithRemember');
+          localStorage.removeItem('logged');
           navigate('/');
         }
       })
@@ -68,7 +69,8 @@ export default function NoteApp() {
             timer: 1500            
           })
           localStorage.removeItem('userName');
-          localStorage.removeItem('isloggedWithRemember');
+          localStorage.removeItem('loggedWithRemember');
+          localStorage.removeItem('logged');
           navigate('/');
         }
       })

@@ -31,7 +31,8 @@ export default function LogIn() {
                     // console.log(response.data);
                     if (response.data.password === password) {
                         localStorage.setItem('userName', response.data.firstName);
-                        localStorage.setItem('isloggedWithRemember', rememberMe);
+                        localStorage.setItem('loggedWithRemember', rememberMe);
+                        localStorage.setItem('logged', true);
 
                         Swal.fire({
                             position: 'top-end',
