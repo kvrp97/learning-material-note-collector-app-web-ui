@@ -21,6 +21,18 @@ export default function NoteApp() {
   let userName = localStorage.getItem('userName');
   let isloggedWithRemember = JSON.parse(localStorage.getItem('loggedWithRemember'));
 
+  // window.addEventListener("unload", (ev) => {
+  //   // ev.preventDefault();
+  //   // return ev.returnValue = 'Are you sure you want to close?';
+  // });
+
+  window.addEventListener('beforeunload', ()=>{
+    if (!isloggedWithRemember) {
+      localStorage.removeItem('logged');
+      localStorage.removeItem('userName');
+    }
+  });
+
   const handleClose = () => {
     setOpen(!open);
   }
@@ -44,9 +56,9 @@ export default function NoteApp() {
             icon: 'success',
             title: 'Signed out..!',
             showConfirmButton: false,
-            timer: 1500            
+            timer: 1500
           })
-          localStorage.setItem('loggedWithRemember',false);
+          localStorage.setItem('loggedWithRemember', false);
           localStorage.removeItem('userName');
           localStorage.removeItem('logged');
           navigate('/');
@@ -67,9 +79,9 @@ export default function NoteApp() {
             icon: 'success',
             title: 'Thanks for using the Note APP',
             showConfirmButton: false,
-            timer: 1500            
+            timer: 1500
           })
-          localStorage.setItem('loggedWithRemember',false);
+          localStorage.setItem('loggedWithRemember', false);
           localStorage.removeItem('userName');
           localStorage.removeItem('logged');
           navigate('/');
