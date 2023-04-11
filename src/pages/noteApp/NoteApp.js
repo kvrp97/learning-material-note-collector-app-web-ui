@@ -18,16 +18,16 @@ export default function NoteApp() {
 
   const navigate = useNavigate();
 
-  let userName = localStorage.getItem('userName');
-  let isloggedWithRemember = JSON.parse(localStorage.getItem('loggedWithRemember'));
+  const userName = localStorage.getItem('userName');
+  const loggedWithRemember = JSON.parse(localStorage.getItem('loggedWithRemember'));
 
   // window.addEventListener("unload", (ev) => {
   //   // ev.preventDefault();
   //   // return ev.returnValue = 'Are you sure you want to close?';
   // });
 
-  window.addEventListener('beforeunload', ()=>{
-    if (!isloggedWithRemember) {
+  window.addEventListener('beforeunload', () => {
+    if (!loggedWithRemember) {
       localStorage.removeItem('logged');
       localStorage.removeItem('userName');
     }
@@ -42,7 +42,7 @@ export default function NoteApp() {
   }
 
   const handleExit = () => {
-    if (isloggedWithRemember) {
+    if (loggedWithRemember) {
       Swal.fire({
         title: 'Do you want to sign out?',
         showDenyButton: true,
@@ -58,11 +58,11 @@ export default function NoteApp() {
             showConfirmButton: false,
             timer: 1500
           })
-          localStorage.setItem('loggedWithRemember', false);
+          localStorage.removeItem('loggedWithRemember');
           localStorage.removeItem('userName');
           localStorage.removeItem('logged');
-          navigate('/');
-          window.location.reload();
+          navigate('/login');
+          // window.location.reload();
         }
       })
     } else {
@@ -81,10 +81,10 @@ export default function NoteApp() {
             showConfirmButton: false,
             timer: 1500
           })
-          localStorage.setItem('loggedWithRemember', false);
+          localStorage.removeItem('loggedWithRemember');
           localStorage.removeItem('userName');
           localStorage.removeItem('logged');
-          navigate('/');
+          navigate('/login');
         }
       })
     }
@@ -96,7 +96,7 @@ export default function NoteApp() {
         <h2>NOTE APP</h2>
         <div className='signed-user-div'>
           <small className='username-txt'>Hi {userName}..!</small>
-          {isloggedWithRemember ?
+          {loggedWithRemember ?
             <Button onClick={handleExit} className='log-out-btn'><LogoutIcon /></Button>
             : <Button onClick={handleExit} className='log-out-btn'><ArrowForwardIcon /></Button>
           }
