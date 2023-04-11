@@ -71,7 +71,7 @@ export default function SignUp() {
     <div className='container-sign-up'>
       <div className='form-container-sign-up'>
         <form className='sign-up-form' onSubmit={handleSubmit}>
-          <h3 className='sign-up-title'>USER SIGN UP</h3>
+          <h3 className='sign-up-title'>NOTE APP - SIGN UP</h3>
           <div className='user-name'>
             <div className='name'>
               <TextField value={firstName} onChange={(e) => { setFirstName(e.target.value) }} label="First Name" variant="outlined" required />
