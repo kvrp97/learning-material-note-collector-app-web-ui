@@ -1,11 +1,13 @@
 .note-item {
     background-color: #fffade;
+    box-shadow: 0px 0px 10px 2px #4c4c4c;
     border-radius: 20px;
     padding: 2rem;
     margin-bottom: 1rem;
     margin-left: auto;
     margin-right: auto;
-    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
     min-height: 250px;
     display: flex;
     flex-direction: column;
@@ -13,33 +15,39 @@
     white-space: pre-wrap;
 }
 
-.icon{
-    margin-right: 0.5rem;
-    padding: 0.5rem;
-    border-radius: 50px;    
+@media only screen and (max-width: 700px) {
+    .note-item {
+        min-width: 100%;
+    }
 }
 
-.icon:hover{
+.icon {
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 50px;
+}
+
+.icon:hover {
     cursor: pointer;
     background-color: #678e9f;
     color: white;
 }
 
 
-.title{
+.title {
     width: 100%;
     font-size: 1.2em;
     font-weight: 600;
     word-wrap: break-word;
 }
 
-.description{
+.description {
     margin: 0.5rem;
     font-weight: 350;
     word-wrap: break-word;
 }
 
-.footer-container{
+.footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
