@@ -15,6 +15,13 @@
     white-space: pre-wrap;
 }
 
+@media only screen and (max-width: 950px) {
+    .note-item {
+        min-width: 80%;
+        min-height: auto;
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .note-item {
         min-width: 100%;
