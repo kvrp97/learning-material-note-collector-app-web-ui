@@ -15,6 +15,7 @@ export default function NoteApp() {
 
   const [open, setOpen] = useState(false);
   const [newNote, setNewNote] = useState(0);
+  const [searchInput, setSearchInput] = useState('');
 
   const navigate = useNavigate();
 
@@ -102,7 +103,15 @@ export default function NoteApp() {
           }
         </div>
         <div>
-          <TextField className='search' id="outlined-basic" label={<SearchIcon />} variant="outlined" placeholder='Search...' />
+          <TextField
+            className='search'
+            id="outlined-basic"
+            label={<SearchIcon />}
+            variant="outlined"
+            placeholder='Search...'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
         </div>
         <div className='btn-contain'>
           <Button onClick={() => setOpen(true)} variant="contained"><NoteAddIcon className='note-icon' />New Note</Button>
