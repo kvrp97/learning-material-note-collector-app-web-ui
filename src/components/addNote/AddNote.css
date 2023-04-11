@@ -3,7 +3,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #edf8ff;
+    background-color: #f4fbff;
     border: 3px solid #4b79ab;
     border-radius: 20px;    
     padding: 1.5rem;
@@ -11,10 +11,10 @@
     min-height: 50%;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
     .add-note-box{        
-        width: 80vw;
-        min-height: 70%;
+        width: 75%;
+        min-height: 60%;
     }
 }
 
