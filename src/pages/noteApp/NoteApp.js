@@ -118,7 +118,7 @@ export default function NoteApp() {
         </div>
       </div>
 
-      <NoteList new={newNote} />
+      <NoteList new={newNote} searchInput={searchInput}/>
 
       <AddNote open={open} handleClose={handleClose} save={saveNew} />
     </div>

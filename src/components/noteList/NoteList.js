@@ -35,8 +35,25 @@ export default function NoteList(props) {
 
   // reloading on update
   useEffect(() => {
-    loadAllNotes();    
+    loadAllNotes();
   }, [update])
+
+  // search for notes
+  useEffect(() => {
+    if (props.searchInput.length > 2) {
+      const searchFields = ["title", "description"]
+
+      axios.get('http://localhost:8090/api/v1/note/get-all-notes')
+        .then(function (response) {
+          setNotes(response.data.filter((noteItem) => searchFields.some(searchField => noteItem[searchField].toLowerCase().includes(props.searchInput))));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      loadAllNotes();
+    }
+  }, [props.searchInput])
 
   const loadAllNotes = () => {
     axios.get('http://localhost:8090/api/v1/note/get-all-notes')
