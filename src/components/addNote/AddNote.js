@@ -17,17 +17,17 @@ export default function AddNote(props) {
   const descriptionCharacterLimit = 250;
 
   const saveNewNote = () => {
-    // console.log('save function is called');
 
     const date = new Date();
-    const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-    // console.log(localDateTime);
+    const newNoteDateTime = date.toLocaleString('en-US', {
+      hour12: false,
+    });
 
     if (title.trim().length > 0 || description.trim().length > 0) {
       axios.post('http://localhost:8090/api/v1/note/save', {
         title: title,
         description: description,
-        dateTime: localDateTime,
+        dateTime: newNoteDateTime,
       })
         .then(function (response) {
           // console.log(response);
@@ -49,7 +49,6 @@ export default function AddNote(props) {
           //   window.location.reload(NoteList);
           // }, 1500);       
         });
-
     } else {
       Swal.fire('Please add a title or description');
     }
@@ -86,9 +85,9 @@ export default function AddNote(props) {
               label="Title"
               variant="outlined"
               maxRows={2}
-              
+
             />
-            <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>            
+            <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>
           </div>
           <div className='new-margins'>
             <TextField

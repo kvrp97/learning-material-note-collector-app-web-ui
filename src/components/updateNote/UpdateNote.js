@@ -46,14 +46,20 @@ export default function UpdateNote(props) {
         if (title.trim().length > 0 || description.trim().length > 0) {
 
             const date = new Date();
-            const localDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-            // console.log(localDateTime);
+            const updatedDateTime = date.toLocaleString('en-US',{
+                hour12:false,
+            });
+            
+            // const updatedDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            // console.log(date.toLocaleString('en-US',{
+            //     hour12:false,
+            // }));
 
             axios.put('http://localhost:8090/api/v1/note/update', {
                 id: id,
                 title: title,
                 description: description,
-                dateTime: localDateTime,
+                dateTime: updatedDateTime,
             })
                 .then(function (response) {
                     // console.log(response.data);                    
