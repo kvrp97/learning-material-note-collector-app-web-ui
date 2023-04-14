@@ -40,7 +40,7 @@ export default function NoteList(props) {
 
   // search for notes
   useEffect(() => {
-    if (props.searchInput.length > 2) {
+    if (props.searchInput.length > 0) {
       const searchFields = ["title", "description"]
 
       axios.get('http://localhost:8090/api/v1/note/get-all-notes')
