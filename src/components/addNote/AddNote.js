@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import '../addNote/AddNote.css'
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -106,6 +108,12 @@ export default function AddNote(props) {
               multiline
             />
             <small>{descriptionCharacterLimit - description.length} / {descriptionCharacterLimit}</small>
+          </div>
+          <div>
+            <IconButton color="primary" aria-label="upload picture" component="label">
+              <input hidden accept="image/*" type="file" multiple/>
+              <PhotoCamera />
+            </IconButton>
           </div>
           <div className='btns'>
             <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>

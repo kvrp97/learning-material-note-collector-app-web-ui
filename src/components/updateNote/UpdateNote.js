@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import '../updateNote/UpdateNote.css'
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -46,10 +48,10 @@ export default function UpdateNote(props) {
         if (title.trim().length > 0 || description.trim().length > 0) {
 
             const date = new Date();
-            const updatedDateTime = date.toLocaleString('en-US',{
-                hour12:false,
+            const updatedDateTime = date.toLocaleString('en-US', {
+                hour12: false,
             });
-            
+
             // const updatedDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
             // console.log(date.toLocaleString('en-US',{
             //     hour12:false,
@@ -109,9 +111,9 @@ export default function UpdateNote(props) {
                             label="Title"
                             variant="outlined"
                             maxRows={2}
-                            
+
                         />
-                        <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>  
+                        <small>{titleCharacterLimit - title.length} / {titleCharacterLimit}</small>
                     </div>
                     <div className='new-margins'>
                         <TextField
@@ -130,6 +132,12 @@ export default function UpdateNote(props) {
                             multiline
                         />
                         <small>{descriptionCharacterLimit - description.length} / {descriptionCharacterLimit}</small>
+                    </div>
+                    <div>
+                        <IconButton color="primary" aria-label="upload picture" component="label">
+                            <input hidden accept="image/*" type="file" multiple />
+                            <PhotoCamera />
+                        </IconButton>
                     </div>
                     <div className='btns'>
                         <Button onClick={handleUpdate} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>
