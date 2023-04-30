@@ -14,7 +14,7 @@ export default function UpdateNote(props) {
     const [description, setDescription] = useState('');
 
     const titleCharacterLimit = 100;
-    const descriptionCharacterLimit = 250;
+    const descriptionCharacterLimit = 450;
 
     useEffect(() => {
         setTitle(popupTitle);
