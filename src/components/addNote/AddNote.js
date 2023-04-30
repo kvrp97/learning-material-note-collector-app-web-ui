@@ -33,7 +33,7 @@ export default function AddNote(props) {
       })
         .then(function (response) {
           // console.log(response);
-          save(response.data.id);
+          save();
           Swal.fire({
             position: 'bottom',
             icon: 'success',
