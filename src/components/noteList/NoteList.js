@@ -41,15 +41,28 @@ export default function NoteList(props) {
   // search for notes
   useEffect(() => {
     if (props.searchInput.length > 0) {
-      const searchFields = ["title", "description"]
-
-      axios.get('http://localhost:8090/api/v1/note/get-all-notes')
-        .then(function (response) {
-          setNotes(response.data.filter((noteItem) => searchFields.some(searchField => noteItem[searchField].toLowerCase().includes(props.searchInput))));
+      axios.get('http://localhost:8090/api/v1/note/search-notes', {
+        params: {
+          searchKeyword: props.searchInput,
+        }
+      })
+        .then((response) => {
+          // console.log(response.data);
+          setNotes(response.data);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
+
+      // const searchFields = ["title", "description"]
+
+      // axios.get('http://localhost:8090/api/v1/note/get-all-notes')
+      //   .then(function (response) {
+      //     setNotes(response.data.filter((noteItem) => searchFields.some(searchField => noteItem[searchField].toLowerCase().includes(props.searchInput))));
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
     } else {
       loadAllNotes();
     }
