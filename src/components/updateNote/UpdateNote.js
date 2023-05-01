@@ -135,7 +135,7 @@ export default function UpdateNote(props) {
                     </div>
                     <div>
                         <IconButton color="primary" aria-label="upload picture" component="label">
-                            <input hidden accept="image/*" type="file" multiple />
+                            <input hidden accept="image/jpeg image/png image/webp" type="file" multiple />
                             <PhotoCamera />
                         </IconButton>
                     </div>

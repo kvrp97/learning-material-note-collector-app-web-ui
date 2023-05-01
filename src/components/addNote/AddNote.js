@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import '../addNote/AddNote.css'
 import axios from 'axios';
@@ -14,9 +15,19 @@ export default function AddNote(props) {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [images, setImages] = useState([]);
 
   const titleCharacterLimit = 100;
   const descriptionCharacterLimit = 450;
+  const imagesCount = 5;
+
+  const onSelectImages = (e) => {
+    e.preventDefault();
+    const selectedImagesArray = Array.from(e.target.files);
+    if ((e.target.files.length + images.length) <= imagesCount) {
+      setImages((previousImages) => previousImages.concat(selectedImagesArray));
+    }
+  }
 
   const saveNewNote = () => {
 
@@ -60,6 +71,7 @@ export default function AddNote(props) {
     setTitle('');
     setDescription('');
     handleClose();
+    setImages([]);
   }
 
   return (
@@ -111,9 +123,28 @@ export default function AddNote(props) {
           </div>
           <div>
             <IconButton color="primary" aria-label="upload picture" component="label">
-              <input hidden accept="image/*" type="file" multiple/>
+              <input hidden accept="image/jpeg, image/png, image/webp" type="file" multiple onChange={onSelectImages} />
               <PhotoCamera />
             </IconButton>
+          </div>
+          <small>Add up to 5 images</small>
+          <div className='images-container'>
+            {
+              images?.map((image, index) => {
+                return (
+                  <div key={index} className='img'>
+                    <img src={URL.createObjectURL(image)} alt='pic' width={80} />
+                    <div >
+                      <IconButton aria-label="delete" size="small" onClick={()=>{
+                        setImages(images.filter((img) => img !== image));
+                      }}>
+                        <DeleteIcon fontSize="inherit" />
+                      </IconButton>
+                    </div>
+                  </div>
+                )
+              })
+            }
           </div>
           <div className='btns'>
             <Button onClick={saveNewNote} sx={{ m: 1, display: 'block' }} variant="contained">Save</Button>
