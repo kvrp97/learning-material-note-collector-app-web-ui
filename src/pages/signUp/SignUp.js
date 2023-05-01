@@ -40,7 +40,6 @@ export default function SignUp() {
         password: password
       })
         .then(function (response) {
-          console.log(response.data);
           if (response.data) {
             clearFields();
             Swal.fire({
