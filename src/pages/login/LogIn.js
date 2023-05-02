@@ -19,43 +19,40 @@ export default function LogIn() {
         e.preventDefault();
 
         if (email.trim().length > 0 && password.trim().length > 0) {
-            axios.get('http://localhost:8090/api/v1/user/get-user',
+            axios.post('http://localhost:8090/api/v1/user/login',
                 {
-                    params: {
-                        email: email,
-                    }
+                    emailAddress: email,
+                    password: password
                 }
             )
                 .then(function (response) {
                     // handle success
                     // console.log(response.data);
-                    if (response.data.password === password) {
-                        localStorage.setItem('userName', response.data.firstName);
-                        localStorage.setItem('loggedWithRemember', rememberMe);
-                        localStorage.setItem('logged', true);
+                    // console.log(response.data.data.user);
 
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: "'You've been logged in successfully'",
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        navigate('/note');
-                    } else {
-                        // return alert('Please enter your valid email address and password');
-                        Swal.fire({
-                            position: 'top',
-                            icon: 'warning',
-                            title: 'Invalid login details',
-                            text: 'Please enter a valid email address & password'
-                        })
-                    }
+                    localStorage.setItem('userName', response.data.data.user);
+                    localStorage.setItem('loggedWithRemember', rememberMe);
+                    localStorage.setItem('logged', true);
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: "'You've been logged in successfully'",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    navigate('/note');
                 })
                 .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                    navigate('/');
+                    Swal.fire({
+                        position: 'top',
+                        icon: 'warning',
+                        title: 'Invalid login details',
+                        text: 'Please enter a valid email address & password'
+                    })
+                })
+                .finally(() => {
+                    console.clear();
                 });
         } else {
             Swal.fire('Please complete the login details');

@@ -39,27 +39,28 @@ export default function SignUp() {
         emailAddress: email,
         password: password
       })
-        .then(function (response) {
-          if (response.data) {
-            clearFields();
-            Swal.fire({
-              icon: 'success',
-              title: 'User saved successfully',
-              footer: '<a href="/">Log In</a>'
-            })
-          } else {
+        .then(response => {
+          clearFields();
+          Swal.fire({
+            icon: 'success',
+            title: 'User saved successfully',
+            footer: '<a href="/">Log In</a>'
+          })
+        })
+        .catch(error => {
+          // console.error(error.response);
+          if (error.response.data.statusCode === 409) {
             Swal.fire({
               icon: 'info',
               title: 'Email address already in use',
               text: 'Use a different email address',
             })
+          } else {
+            alert('Internal error');
           }
         })
-        .catch(function (error) {
-          console.log(error);
-        })
         .finally(() => {
-
+          console.clear();
         });
     } else {
       Swal.fire('Please complete all the fields');
