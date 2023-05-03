@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../note/Note.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,11 +8,17 @@ import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
-  const { id, title, description, dateTime, update } = props;
+  const { id, title, description, dateTime, noteImages, update } = props;
   const [open, setOpen] = useState(false);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    setImages(noteImages);
+  }, [noteImages])
 
   // delete feature
   const deleteNote = () => {
+    console.log(images);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -74,6 +80,17 @@ export default function Note(props) {
           <div className='description'>
             {description}
           </div>
+        </div>
+        <div className='note-images-container'>
+          {
+            images?.map(({noteImageId, imagePath})=>{
+              return(
+                <div key={noteImageId} className='img-item'>
+                  <img src={'http://localhost:8091'+imagePath} alt='img' width={90}/>
+                </div>
+              )
+            })
+          }
         </div>
         <div className='footer-container'>
           <div>
