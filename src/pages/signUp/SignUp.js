@@ -33,7 +33,7 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isNotEmpty()) {
-      axios.post('http://localhost:8090/api/v1/user/save', {
+      axios.post('http://localhost:8091/api/v1/user/save', {
         firstName: firstName,
         lastName: lastName,
         emailAddress: email,

@@ -19,7 +19,7 @@ export default function LogIn() {
         e.preventDefault();
 
         if (email.trim().length > 0 && password.trim().length > 0) {
-            axios.post('http://localhost:8090/api/v1/user/login',
+            axios.post('http://localhost:8091/api/v1/user/login',
                 {
                     emailAddress: email,
                     password: password
@@ -27,10 +27,10 @@ export default function LogIn() {
             )
                 .then(function (response) {
                     // handle success
-                    // console.log(response.data);
+                    console.log(response.data);
                     // console.log(response.data.data.user);
 
-                    localStorage.setItem('userName', response.data.data.user);
+                    localStorage.setItem('userName', response.data.data);
                     localStorage.setItem('loggedWithRemember', rememberMe);
                     localStorage.setItem('logged', true);
 
@@ -52,7 +52,7 @@ export default function LogIn() {
                     })
                 })
                 .finally(() => {
-                    console.clear();
+                    // console.clear();
                 });
         } else {
             Swal.fire('Please complete the login details');
