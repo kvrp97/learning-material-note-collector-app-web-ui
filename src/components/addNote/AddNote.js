@@ -45,20 +45,19 @@ export default function AddNote(props) {
 
     setSelectedFiles(newSelectedFiles);
     setPreviewImages(newPreviewImages);
-
   };
 
   const saveNewNote = (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("description", description);    
-    
+    formData.append("description", description);
+
     const date = new Date();
     const newNoteDateTime = date.toLocaleString('en-US', {
       hour12: false,
-    });   
+    });
     formData.append("dateTime", newNoteDateTime);
 
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -83,7 +82,7 @@ export default function AddNote(props) {
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
-            text: 'Something went wrong!',            
+            text: 'Something went wrong!',
           })
         })
         .finally(() => {
@@ -91,7 +90,7 @@ export default function AddNote(props) {
           // setTimeout(() => {
           //   window.location.reload(NoteList);
           // }, 1500);  
-          console.clear();     
+          console.clear();
         });
     } else {
       Swal.fire('Please add a title or description');
@@ -164,7 +163,7 @@ export default function AddNote(props) {
             {
               previewImages?.map((image, index) => (
                 <div className='img' key={index}>
-                  <img src={image} alt="Preview" width={80} max-height={110}/>
+                  <img src={image} alt="Preview" width={80} max-height={110} />
                   <IconButton onClick={() => handleRemove(index)} aria-label="delete" size="small" >
                     <DeleteIcon fontSize="inherit" />
                   </IconButton>

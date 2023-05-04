@@ -87,7 +87,7 @@ export default function NoteList(props) {
   return (
     <div className='note-container'>
       {notes.map((note, index) => {              
-        return <Note update={handleUpdate} del={deleteToggle} id={note.id} title={note.title} description={note.description} dateTime={note.dateTime} noteImages={note.noteImages} key={index} />
+        return <Note update={handleUpdate} del={deleteToggle} noteId={note.noteId} title={note.title} description={note.description} dateTime={note.dateTime} noteImages={note.noteImages} key={index} />
       }
       )}
     </div>

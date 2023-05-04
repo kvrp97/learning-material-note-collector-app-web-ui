@@ -8,7 +8,7 @@ import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
-  const { id, title, description, dateTime, noteImages, update } = props;
+  const { noteId, title, description, dateTime, noteImages, update } = props;
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
@@ -18,7 +18,7 @@ export default function Note(props) {
 
   // delete feature
   const deleteNote = () => {
-    console.log(images);
+    // console.log(images);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -31,7 +31,7 @@ export default function Note(props) {
       if (result.isConfirmed) {
         axios.delete('http://localhost:8090/api/v1/note/delete', {
           params: {
-            noteId: id
+            noteId: noteId
           }
         })
           .then((response) => {
@@ -72,7 +72,7 @@ export default function Note(props) {
 
   return (
     <>
-      <div id={id} className='note-item'>
+      <div id={noteId} className='note-item'>
         <div className='note-content'>
           <div className='title'>
             {title}
@@ -86,7 +86,7 @@ export default function Note(props) {
             images?.map(({noteImageId, imagePath})=>{
               return(
                 <div key={noteImageId} className='img-item'>
-                  <img src={'http://localhost:8091'+imagePath} alt='img' width={90}/>
+                  <img src={imagePath} alt='img' width={90}/>
                 </div>
               )
             })
@@ -103,7 +103,7 @@ export default function Note(props) {
         </div>
       </div>
 
-      <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} handleClose={handleClose} />
+      <UpdateNote update={update} noteId={noteId} popupTitle={title} popupDescription={description} popupImages={noteImages} open={open} handleClose={handleClose} />
     </>
   )
 }

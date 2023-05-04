@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import '../updateNote/UpdateNote.css'
 import axios from 'axios';
@@ -10,40 +11,102 @@ import Swal from 'sweetalert2'
 
 export default function UpdateNote(props) {
 
-    const { id, popupTitle, popupDescription, open, handleClose, update } = props;
-
+    const { noteId, popupTitle, popupDescription, popupImages, open, handleClose, update } = props;
+    
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const [previewSelectedImages, setPreviewSelectedImages] = useState([]);
+    const [previewImages, setPreviewImages] = useState([]);
+    const [ImagesToRemove, setImagesToRemove] = useState([]);
 
     const titleCharacterLimit = 100;
     const descriptionCharacterLimit = 450;
+    const imagesCount = 5;
 
     useEffect(() => {
+        setPreviewImages(popupImages);
         setTitle(popupTitle);
         setDescription(popupDescription);
-    }, [update, popupTitle, popupDescription]);
+    }, [noteId, update, popupTitle, popupDescription, popupImages]);
 
     useEffect(() => {
         setTitle(title);
         setDescription(description);
     }, [title, description]);
 
+    const handleRemoveImages = (image, index) => {
+        const newPreviewImages = [...previewImages];
+
+        newPreviewImages.splice(index, 1)
+
+        setImagesToRemove([...ImagesToRemove, image]);
+        setPreviewImages(newPreviewImages);
+    }
+
+    const handleRemoveSelectedImages = (index) => {
+        const newSelectedFiles = [...selectedFiles];
+        const newpreviewSelectedImages = [...previewSelectedImages];
+
+        newSelectedFiles.splice(index, 1);
+        newpreviewSelectedImages.splice(index, 1);
+
+        setSelectedFiles(newSelectedFiles);
+        setPreviewSelectedImages(newpreviewSelectedImages);
+    }
+
+    const handleFileChange = (event) => {
+        if ((event.target.files.length + previewImages.length + previewSelectedImages.length) <= imagesCount) {
+            const files = event.target.files;
+            const previewSelectedImagesArray = [];
+
+            for (let i = 0; i < files.length; i++) {
+                previewSelectedImagesArray.push(URL.createObjectURL(files[i]));
+            }
+            setSelectedFiles((previousImage) => previousImage.concat([...files]));
+            setPreviewSelectedImages((previousImage) => previousImage.concat(previewSelectedImagesArray));
+        }
+    }
+
+    // edit this after done processing-----------------------------------------
     const onClose = () => {
         setTitle(popupTitle);
         setDescription(popupDescription);
+        setPreviewImages(popupImages);
+        setSelectedFiles([]);
+        setImagesToRemove([]);
+        setPreviewSelectedImages([]);
         handleClose();
     }
 
     const handleUpdate = () => {
-        if (title === popupTitle && description === popupDescription) {
-            handleClose();
+        if ((title !== popupTitle || description !== popupDescription) && popupImages.length === previewImages.length && selectedFiles.length === 0) {
+            updateNoteTitleAndDescription();
+            console.log("updateNoteTitleAndDescription====1");
+        } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length === 0) {
+            console.log("updateNoteTitleAndDescription====2");
+            console.log("removeNoteimages=======2");
+            // handleClose();
+        } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length !== 0) {
+            console.log("updateNoteTitleAndDescription====3");
+            console.log("removeNoteimages=======3");
+            console.log("new images added=====3");
+        } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
+            console.log("updateNoteTitleAndDescription====4");
+            console.log("new images added=====4");
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length === 0) {
+            console.log("only deleteimage====5");
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
+            console.log("only added images===6");
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length !== 0) {
+            console.log("only deleteimage====7");
+            console.log("only added images====7");
         } else {
-            updateNote();
+            console.log("not updated====8");
         }
     }
 
-    const updateNote = () => {
-        // console.log('update function is called');
+    const updateNoteTitleAndDescription = async () => {
 
         if (title.trim().length > 0 || description.trim().length > 0) {
 
@@ -57,14 +120,14 @@ export default function UpdateNote(props) {
             //     hour12:false,
             // }));
 
-            axios.put('http://localhost:8090/api/v1/note/update', {
-                id: id,
+            await axios.put('http://localhost:8091/api/v1/note/update-title-description', {
+                noteId: noteId,
                 title: title,
                 description: description,
                 dateTime: updatedDateTime,
             })
                 .then(function (response) {
-                    // console.log(response.data);                    
+                    // console.log(response.data);
                     update();
                     Swal.fire({
                         position: 'bottom',
@@ -135,9 +198,32 @@ export default function UpdateNote(props) {
                     </div>
                     <div>
                         <IconButton color="primary" aria-label="upload picture" component="label">
-                            <input hidden accept="image/jpeg image/png image/webp" type="file" multiple />
+                            <input hidden accept="image/jpeg, image/png, image/webp" type="file" multiple onChange={handleFileChange} />
                             <PhotoCamera />
                         </IconButton>
+                    </div>
+                    <small>Add up to 5 images</small>
+                    <div className='images-container'>
+                        {
+                            previewImages?.map((image, index) => (
+                                <div className='img' key={index}>
+                                    <img src={image.imagePath} alt="Preview" width={80} max-height={110} />
+                                    <IconButton onClick={() => handleRemoveImages(image, index)} aria-label="delete" size="small" >
+                                        <DeleteIcon fontSize="inherit" />
+                                    </IconButton>
+                                </div>
+                            ))
+                        }
+                        {
+                            previewSelectedImages?.map((selectedImage, index) => (
+                                <div className='img' key={index}>
+                                    <img src={selectedImage} alt="Preview" width={80} max-height={110} />
+                                    <IconButton onClick={() => handleRemoveSelectedImages(index)} aria-label="delete" size="small" >
+                                        <DeleteIcon fontSize="inherit" />
+                                    </IconButton>
+                                </div>
+                            ))
+                        }
                     </div>
                     <div className='btns'>
                         <Button onClick={handleUpdate} sx={{ m: 1, display: 'block' }} variant="contained">Update</Button>
