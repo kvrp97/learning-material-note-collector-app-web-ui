@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 export default function UpdateNote(props) {
 
     const { noteId, popupTitle, popupDescription, popupImages, open, handleClose, update } = props;
-    
+
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedFiles, setSelectedFiles] = useState([]);
@@ -56,6 +56,7 @@ export default function UpdateNote(props) {
     }
 
     const handleFileChange = (event) => {
+        event.preventDefault();
         if ((event.target.files.length + previewImages.length + previewSelectedImages.length) <= imagesCount) {
             const files = event.target.files;
             const previewSelectedImagesArray = [];
@@ -79,7 +80,8 @@ export default function UpdateNote(props) {
         handleClose();
     }
 
-    const handleUpdate = () => {
+    const handleUpdate = (e) => {
+        e.preventDefault();
         if ((title !== popupTitle || description !== popupDescription) && popupImages.length === previewImages.length && selectedFiles.length === 0) {
             updateNoteTitleAndDescription();
             console.log("updateNoteTitleAndDescription====1");
@@ -95,6 +97,7 @@ export default function UpdateNote(props) {
             console.log("updateNoteTitleAndDescription====4");
             console.log("new images added=====4");
         } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length === 0) {
+            updateNoteByRemovingImage();
             console.log("only deleteimage====5");
         } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
             console.log("only added images===6");
@@ -147,6 +150,40 @@ export default function UpdateNote(props) {
         } else {
             Swal.fire('Please add a title or description');
         }
+    }
+
+    const updateNoteByRemovingImage = async () => {        
+
+        const date = new Date();
+        const newNoteDateTime = date.toLocaleString('en-US', {
+            hour12: false,
+        });      
+
+        const data = {
+            noteId:noteId,
+            dateTime: newNoteDateTime,
+            noteImageList: ImagesToRemove
+        }
+
+        await axios.put('http://localhost:8091/api/v1/note/update-by-removing-image', data)
+            .then(function (response) {
+                console.log(response.data);
+                update();
+                Swal.fire({
+                    position: 'bottom',
+                    icon: 'success',
+                    title: 'Note updated successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+            .finally(() => {
+                onClose();
+            });
+
     }
 
     return (
