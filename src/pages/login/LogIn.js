@@ -27,7 +27,7 @@ export default function LogIn() {
             )
                 .then(function (response) {
                     // handle success
-                    console.log(response.data);
+                    // console.log(response.data);
                     // console.log(response.data.data.user);
 
                     localStorage.setItem('userName', response.data.data);
