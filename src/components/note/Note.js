@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../note/Note.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,11 +8,17 @@ import UpdateNote from '../../components/updateNote/UpdateNote';
 
 export default function Note(props) {
 
-  const { id, title, description, dateTime, update } = props;
+  const { noteId, title, description, dateTime, noteImages, update } = props;
   const [open, setOpen] = useState(false);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    setImages(noteImages);
+  }, [noteImages])
 
   // delete feature
   const deleteNote = () => {
+    // console.log(images);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -23,23 +29,17 @@ export default function Note(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete('http://localhost:8090/api/v1/note/delete', {
-          params: {
-            noteId: id
-          }
-        })
+        axios.delete(`http://localhost:8091/api/v1/note/delete-note/${noteId}`)
           .then((response) => {
-            // console.log(response.data);
-            if (response.data === true) {
-              props.del(response.data);   // del props' state changed for load all the notes
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Your note has been deleted',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            }
+            console.log(response.data);
+            props.del(response.data.data);   // del props' state changed for load all the notes
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your note has been deleted',
+              showConfirmButton: false,
+              timer: 1500
+            })
           })
           .catch(function (error) {
             console.log(error);
@@ -66,7 +66,7 @@ export default function Note(props) {
 
   return (
     <>
-      <div id={id} className='note-item'>
+      <div id={noteId} className='note-item'>
         <div className='note-content'>
           <div className='title'>
             {title}
@@ -74,6 +74,17 @@ export default function Note(props) {
           <div className='description'>
             {description}
           </div>
+        </div>
+        <div className='note-images-container'>
+          {
+            images?.map(({ noteImageId, imagePath }) => {
+              return (
+                <div key={noteImageId} className='img-item'>
+                  <img src={imagePath} alt='img' width={90} />
+                </div>
+              )
+            })
+          }
         </div>
         <div className='footer-container'>
           <div>
@@ -86,7 +97,7 @@ export default function Note(props) {
         </div>
       </div>
 
-      <UpdateNote update={update} id={id} popupTitle={title} popupDescription={description} open={open} handleClose={handleClose} />
+      <UpdateNote update={update} noteId={noteId} popupTitle={title} popupDescription={description} popupImages={noteImages} open={open} handleClose={handleClose} />
     </>
   )
 }

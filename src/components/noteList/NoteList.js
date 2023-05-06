@@ -41,14 +41,14 @@ export default function NoteList(props) {
   // search for notes
   useEffect(() => {
     if (props.searchInput.length > 0) {
-      axios.get('http://localhost:8090/api/v1/note/search-notes', {
+      axios.get('http://localhost:8091/api/v1/note/search', {
         params: {
           searchKeyword: props.searchInput,
         }
       })
         .then((response) => {
-          // console.log(response.data);
-          setNotes(response.data);
+          // console.log(response.data.data);
+          setNotes(response.data.data);
         })
         .catch((error) => {
           console.log(error);
@@ -69,11 +69,11 @@ export default function NoteList(props) {
   }, [props.searchInput])
 
   const loadAllNotes = () => {
-    axios.get('http://localhost:8090/api/v1/note/get-all-notes')
+    axios.get('http://localhost:8091/api/v1/note/get-all-notes')
       .then(function (response) {
         // handle success
         // console.log(response.data);
-        setNotes(response.data);
+        setNotes(response.data.data);
       })
       .catch(function (error) {
         // handle error
@@ -86,8 +86,8 @@ export default function NoteList(props) {
 
   return (
     <div className='note-container'>
-      {notes.map((note, index) => {
-        return <Note update={handleUpdate} del={deleteToggle} id={note.id} title={note.title} description={note.description} dateTime={note.dateTime} key={index} />
+      {notes.map((note, index) => {              
+        return <Note update={handleUpdate} del={deleteToggle} noteId={note.noteId} title={note.title} description={note.description} dateTime={note.dateTime} noteImages={note.noteImages} key={index} />
       }
       )}
     </div>

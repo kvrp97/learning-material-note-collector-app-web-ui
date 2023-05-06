@@ -24,7 +24,7 @@
 .form-container-sign-up {
     margin: auto;
     height: auto;
-    width: auto;
+    width: 27rem;
     padding-top: 1.8rem;
     padding-bottom: 1.5rem;
     padding-left: 3rem;
@@ -81,3 +81,11 @@
     display: block;
     width: 100%;
 }
+
+/* .error{
+    width: 30;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+} */

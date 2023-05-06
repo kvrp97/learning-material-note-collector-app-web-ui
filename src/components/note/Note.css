@@ -60,3 +60,17 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.note-images-container{
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+    overflow-y: auto;
+    flex-wrap: wrap;
+}
+
+.img-item{
+    margin: 0.1rem;
+}
