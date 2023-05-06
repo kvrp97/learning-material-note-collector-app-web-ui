@@ -83,54 +83,122 @@ export default function UpdateNote(props) {
     const handleUpdate = (e) => {
         e.preventDefault();
         if ((title !== popupTitle || description !== popupDescription) && popupImages.length === previewImages.length && selectedFiles.length === 0) {
-            updateNoteTitleAndDescription();
-            console.log("updateNoteTitleAndDescription====1");
+            if (title.trim().length > 0 || description.trim().length > 0) {
+                updateNoteTitleAndDescription()
+                    .then((response) => {
+                        console.log(response.data);
+                        update();
+                        Swal.fire({
+                            position: 'bottom',
+                            icon: 'success',
+                            title: 'Note updated successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    })
+                    .finally(() => {
+                        onClose();
+                    })
+            } else {
+                Swal.fire('Please add a title or description');
+            }
         } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length === 0) {
-            console.log("updateNoteTitleAndDescription====2");
-            console.log("removeNoteimages=======2");
-            // handleClose();
+            if (title.trim().length > 0 || description.trim().length > 0) {
+                Promise.all([updateNoteTitleAndDescription(), updateNoteByRemovingImage()])
+                    .then(response => {
+                        console.log('All requests completed:', response.data);
+                        update();
+                        Swal.fire({
+                            position: 'bottom',
+                            icon: 'success',
+                            title: 'Note updated successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    })
+                    .finally(() => {
+                        onClose();
+                    })
+            } else {
+                Swal.fire('Please add a title or description');
+            }
         } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length !== 0) {
-            console.log("updateNoteTitleAndDescription====3");
-            console.log("removeNoteimages=======3");
-            console.log("new images added=====3");
+            if (title.trim().length > 0 || description.trim().length > 0) {
+                Promise.all([updateNoteTitleAndDescription(), updateNoteByRemovingImage(), updateNoteByAddingImage()])
+                    .then(response => {
+                        console.log('All requests completed:', response.data);
+                        update();
+                        Swal.fire({
+                            position: 'bottom',
+                            icon: 'success',
+                            title: 'Note updated successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    })
+                    .finally(() => {
+                        onClose();
+                    })
+            } else {
+                Swal.fire('Please add a title or description');
+            }
         } else if ((title !== popupTitle || description !== popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
-            console.log("updateNoteTitleAndDescription====4");
-            console.log("new images added=====4");
+            if (title.trim().length > 0 || description.trim().length > 0) {
+                Promise.all([updateNoteTitleAndDescription(), updateNoteByAddingImage()])
+                    .then(response => {
+                        console.log('All requests completed:', response.data);
+                        update();
+                        Swal.fire({
+                            position: 'bottom',
+                            icon: 'success',
+                            title: 'Note updated successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong!',
+                        })
+                    })
+                    .finally(() => {
+                        onClose();
+                    })
+            } else {
+                Swal.fire('Please add a title or description');
+            }
+
         } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length === 0) {
-            updateNoteByRemovingImage();
-            console.log("only deleteimage====5");
-        } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
-            console.log("only added images===6");
-        } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length !== 0) {
-            console.log("only deleteimage====7");
-            console.log("only added images====7");
-        } else {
-            console.log("not updated====8");
-        }
-    }
-
-    const updateNoteTitleAndDescription = async () => {
-
-        if (title.trim().length > 0 || description.trim().length > 0) {
-
-            const date = new Date();
-            const updatedDateTime = date.toLocaleString('en-US', {
-                hour12: false,
-            });
-
-            // const updatedDateTime = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-            // console.log(date.toLocaleString('en-US',{
-            //     hour12:false,
-            // }));
-
-            await axios.put('http://localhost:8091/api/v1/note/update-title-description', {
-                noteId: noteId,
-                title: title,
-                description: description,
-                dateTime: updatedDateTime,
-            })
-                .then(function (response) {
-                    // console.log(response.data);
+            updateNoteByRemovingImage()
+                .then((response) => {
+                    console.log(response.data);
                     update();
                     Swal.fire({
                         position: 'bottom',
@@ -140,50 +208,116 @@ export default function UpdateNote(props) {
                         timer: 1500
                     })
                 })
-                .catch(function (error) {
-                    console.log(error);
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
                 })
                 .finally(() => {
                     onClose();
-                });
+                })
 
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
+            console.log("only added images===6");
+            updateNoteByAddingImage()
+                .then((response) => {
+                    console.log(response.data);
+                    update();
+                    Swal.fire({
+                        position: 'bottom',
+                        icon: 'success',
+                        title: 'Note updated successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                })
+                .finally(() => {
+                    onClose();
+                })
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length !== previewImages.length && selectedFiles.length !== 0) {
+            Promise.all([updateNoteByRemovingImage(), updateNoteByAddingImage()])
+                .then(response => {
+                    console.log('All requests completed:', response.data);
+                    update();
+                    Swal.fire({
+                        position: 'bottom',
+                        icon: 'success',
+                        title: 'Note updated successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch((error) => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                    })
+                })
+                .finally(() => {
+                    onClose();
+                })
         } else {
-            Swal.fire('Please add a title or description');
+            onClose();
         }
     }
+    
 
-    const updateNoteByRemovingImage = async () => {        
+    const updateNoteTitleAndDescription = () => {
+        const date = new Date();
+        const updatedDateTime = date.toLocaleString('en-US', {
+            hour12: false,
+        });
+
+        const data = {
+            noteId: noteId,
+            title: title,
+            description: description,
+            dateTime: updatedDateTime,
+        }
+        return axios.put('http://localhost:8091/api/v1/note/update-title-description', data);
+    }
+
+    const updateNoteByRemovingImage = () => {
+        const date = new Date();
+        const newNoteDateTime = date.toLocaleString('en-US', {
+            hour12: false,
+        });
+        const data = {
+            noteId: noteId,
+            dateTime: newNoteDateTime,
+            noteImageList: ImagesToRemove
+        }
+        return axios.put('http://localhost:8091/api/v1/note/update-by-removing-image', data);
+    }
+
+    const updateNoteByAddingImage = () => {
+        const formData = new FormData();
+        formData.append("noteId", noteId);
 
         const date = new Date();
         const newNoteDateTime = date.toLocaleString('en-US', {
             hour12: false,
-        });      
+        });
+        formData.append("dateTime", newNoteDateTime);
 
-        const data = {
-            noteId:noteId,
-            dateTime: newNoteDateTime,
-            noteImageList: ImagesToRemove
+        for (let i = 0; i < selectedFiles.length; i++) {
+            formData.append("images", selectedFiles[i]);
         }
 
-        await axios.put('http://localhost:8091/api/v1/note/update-by-removing-image', data)
-            .then(function (response) {
-                console.log(response.data);
-                update();
-                Swal.fire({
-                    position: 'bottom',
-                    icon: 'success',
-                    title: 'Note updated successfully',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(() => {
-                onClose();
-            });
-
+        return axios.put('http://localhost:8091/api/v1/note/update-by-adding-image', formData);
     }
 
     return (
