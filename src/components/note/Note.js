@@ -29,23 +29,17 @@ export default function Note(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete('http://localhost:8090/api/v1/note/delete', {
-          params: {
-            noteId: noteId
-          }
-        })
+        axios.delete(`http://localhost:8091/api/v1/note/delete-note/${noteId}`)
           .then((response) => {
-            // console.log(response.data);
-            if (response.data === true) {
-              props.del(response.data);   // del props' state changed for load all the notes
-              Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Your note has been deleted',
-                showConfirmButton: false,
-                timer: 1500
-              })
-            }
+            console.log(response.data);
+            props.del(response.data.data);   // del props' state changed for load all the notes
+            Swal.fire({
+              position: 'center',
+              icon: 'success',
+              title: 'Your note has been deleted',
+              showConfirmButton: false,
+              timer: 1500
+            })
           })
           .catch(function (error) {
             console.log(error);
@@ -83,10 +77,10 @@ export default function Note(props) {
         </div>
         <div className='note-images-container'>
           {
-            images?.map(({noteImageId, imagePath})=>{
-              return(
+            images?.map(({ noteImageId, imagePath }) => {
+              return (
                 <div key={noteImageId} className='img-item'>
-                  <img src={imagePath} alt='img' width={90}/>
+                  <img src={imagePath} alt='img' width={90} />
                 </div>
               )
             })
