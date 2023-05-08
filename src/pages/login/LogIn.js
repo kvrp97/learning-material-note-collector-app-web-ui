@@ -13,47 +13,55 @@ export default function LogIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [errors, setErrors] = useState('');
     const navigate = useNavigate();
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+        const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        setErrors(emailRegex.test(event.target.value) ? '' : 'Please enter a valid email address');
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (email.trim().length > 0 && password.trim().length > 0) {
-            axios.post('http://localhost:8091/api/v1/user/login',
-                {
-                    emailAddress: email,
-                    password: password
-                }
-            )
-                .then(function (response) {
-                    // handle success
-                    // console.log(response.data);
-                    // console.log(response.data.data.user);
+            if (errors === '') {                
+                axios.post('http://localhost:8091/api/v1/user/login',
+                    {
+                        emailAddress: email,
+                        password: password
+                    }
+                )
+                    .then(function (response) {
+                        localStorage.setItem('userName', response.data.data);
+                        localStorage.setItem('loggedWithRemember', rememberMe);
+                        localStorage.setItem('logged', true);
 
-                    localStorage.setItem('userName', response.data.data);
-                    localStorage.setItem('loggedWithRemember', rememberMe);
-                    localStorage.setItem('logged', true);
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: "'You've been logged in successfully'",
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate('/note');
+                    })
+                    .catch(function (error) {
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'warning',
+                            title: 'Invalid login details',
+                            text: 'Please enter a valid email address & password'
+                        })
+                    })
+                    .finally(() => {
+                        console.clear();
+                    });
+            } else {
+                Swal.fire('Please enter a valid email');
+            }
 
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: "'You've been logged in successfully'",
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                    navigate('/note');
-                })
-                .catch(function (error) {
-                    Swal.fire({
-                        position: 'top',
-                        icon: 'warning',
-                        title: 'Invalid login details',
-                        text: 'Please enter a valid email address & password'
-                    })
-                })
-                .finally(() => {
-                    // console.clear();
-                });
         } else {
             Swal.fire('Please complete the login details');
         }
@@ -70,9 +78,11 @@ export default function LogIn() {
                             className='txt'
                             id="outlined-email-input"
                             label="Email Address"
-                            type="email"
+                            type="text"
                             value={email}
-                            onChange={(e) => { setEmail(e.target.value) }}
+                            onChange={handleEmailChange}
+                            helperText={errors}
+                            error={Boolean(errors)}
                             required
                         />
                     </div><br />
