@@ -93,41 +93,46 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (firstName.length > 0 && lastName.length > 0 && email.length > 0 && password.length > 0 && confirmPassword.length > 0) {
 
-    if (Object.values(errors).some(err => err !== '')) {
-      Swal.fire('Please fill the form properly..!');
-    } else {
-      console.log("success!");
-      axios.post('api/v1/user/save', {
-        firstName: firstName,
-        lastName: lastName,
-        emailAddress: email,
-        password: confirmPassword,
-      })
-        .then(response => {
-          clearFields();
-          Swal.fire({
-            icon: 'success',
-            title: 'User saved successfully',
-            footer: '<a href="/">Log In</a>'
-          })
+      if (Object.values(errors).some(err => err !== '')) {
+        Swal.fire('Please fill the form correctly..!');
+      } else {
+        // console.log("success!");
+        axios.post('api/v1/user/save', {
+          firstName: firstName,
+          lastName: lastName,
+          emailAddress: email,
+          password: confirmPassword,
         })
-        .catch(error => {
-          // console.error(error.response);
-          if (error.response.data.statusCode === 409) {
+          .then(response => {
+            clearFields();
             Swal.fire({
-              icon: 'info',
-              title: 'Email address already in use',
-              text: 'Use a different email address',
+              icon: 'success',
+              title: 'User saved successfully',
+              footer: '<a href="/">Log In</a>'
             })
-          } else {
-            alert('Internal error');
-          }
-        })
-        .finally(() => {
-          console.clear();
-        });
+          })
+          .catch(error => {
+            // console.error(error.response);
+            if (error.response.data.statusCode === 409) {
+              Swal.fire({
+                icon: 'info',
+                title: 'Email address already in use',
+                text: 'Use a different email address',
+              })
+            } else {
+              alert('Internal error');
+            }
+          })
+          .finally(() => {
+            console.clear();
+          });
+      }
+    } else {
+      Swal.fire('All fields are required.!');
     }
+
   }
 
   return (
@@ -144,7 +149,7 @@ export default function SignUp() {
                 variant="outlined"
                 helperText={errors.firstName}
                 error={Boolean(errors.firstName)}
-              // required
+                required
               />
             </div>
             <div className='name'>
@@ -155,7 +160,7 @@ export default function SignUp() {
                 variant="outlined"
                 helperText={errors.lastName}
                 error={Boolean(errors.lastName)}
-              // required
+                required
               />
             </div>
           </div>
@@ -170,7 +175,7 @@ export default function SignUp() {
                 type="email"
                 helperText={errors.email}
                 error={Boolean(errors.email)}
-              // required
+                required
               />
             </div><br />
             <div>
@@ -182,7 +187,7 @@ export default function SignUp() {
                 type="password"
                 helperText={errors.password}
                 error={Boolean(errors.password)}
-              // required
+                required
               />
             </div><br />
             <div>
@@ -194,7 +199,7 @@ export default function SignUp() {
                 type="password"
                 helperText={errors.confirmPassword}
                 error={Boolean(errors.confirmPassword)}
-              // required
+                required
               />
             </div>
             <br />
