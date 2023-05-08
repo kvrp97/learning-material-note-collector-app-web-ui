@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import '../note/Note.css'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import UpdateNote from '../../components/updateNote/UpdateNote';
+import ImageViewer from 'react-simple-image-viewer';
 
 export default function Note(props) {
 
@@ -12,13 +13,30 @@ export default function Note(props) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
+  const [currentImage, setCurrentImage] = useState(0);
+  const [isViewerOpen, setIsViewerOpen] = useState(false);
+
   useEffect(() => {
     setImages(noteImages);
   }, [noteImages])
 
+  const openImageViewer = useCallback((index) => {
+    setCurrentImage(index);
+    setIsViewerOpen(true);
+  }, []);
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
+  const imagesArray = images?.map(({imagePath}, index)=>{
+    return imagePath;
+  })
+
   // delete feature
   const deleteNote = () => {
-    // console.log(images);
+    console.log(images);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -77,14 +95,24 @@ export default function Note(props) {
         </div>
         <div className='note-images-container'>
           {
-            images?.map(({ noteImageId, imagePath }) => {
+            images?.map(({ noteImageId, imagePath, imageName }, index) => {
               return (
                 <div key={noteImageId} className='img-item'>
-                  <img src={imagePath} alt='img'/>
+                  <img src={imagePath} alt={imageName} key={index} onClick={()=> openImageViewer(index)} />
                 </div>
               )
             })
           }
+
+          {isViewerOpen && (
+            <ImageViewer
+              src={imagesArray}
+              currentIndex={currentImage}
+              disableScroll={false}
+              closeOnClickOutside={true}
+              onClose={closeImageViewer}
+            />
+          )}
         </div>
         <div className='footer-container'>
           <div>
