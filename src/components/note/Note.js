@@ -97,8 +97,8 @@ export default function Note(props) {
           {
             images?.map(({ noteImageId, imagePath, imageName }, index) => {
               return (
-                <div key={noteImageId} className='img-item'>
-                  <img src={imagePath} alt={imageName} key={index} onClick={()=> openImageViewer(index)} />
+                <div key={noteImageId} className='img-item-container'>
+                  <img className='image' src={imagePath} alt={imageName} key={index} onClick={()=> openImageViewer(index)} />
                 </div>
               )
             })
