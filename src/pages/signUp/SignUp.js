@@ -98,7 +98,7 @@ export default function SignUp() {
       Swal.fire('Please fill the form properly..!');
     } else {
       console.log("success!");
-      axios.post('http://localhost:8091/api/v1/user/save', {
+      axios.post('api/v1/user/save', {
         firstName: firstName,
         lastName: lastName,
         emailAddress: email,

@@ -65,7 +65,7 @@ export default function AddNote(props) {
     }
 
     if (title.trim().length > 0 || description.trim().length > 0) {
-      axios.post('http://localhost:8091/api/v1/note/save', formData)
+      axios.post('api/v1/note/save', formData)
         .then(function (response) {
           // console.log(response);
           save();

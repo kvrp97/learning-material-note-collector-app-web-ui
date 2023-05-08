@@ -287,7 +287,7 @@ export default function UpdateNote(props) {
             description: description,
             dateTime: updatedDateTime,
         }
-        return axios.put('http://localhost:8091/api/v1/note/update-title-description', data);
+        return axios.put('api/v1/note/update-title-description', data);
     }
 
     const updateNoteByRemovingImage = () => {
@@ -300,7 +300,7 @@ export default function UpdateNote(props) {
             dateTime: newNoteDateTime,
             noteImageList: ImagesToRemove
         }
-        return axios.put('http://localhost:8091/api/v1/note/update-by-removing-image', data);
+        return axios.put('api/v1/note/update-by-removing-image', data);
     }
 
     const updateNoteByAddingImage = () => {
@@ -317,7 +317,7 @@ export default function UpdateNote(props) {
             formData.append("images", selectedFiles[i]);
         }
 
-        return axios.put('http://localhost:8091/api/v1/note/update-by-adding-image', formData);
+        return axios.put('api/v1/note/update-by-adding-image', formData);
     }
 
     return (

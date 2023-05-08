@@ -47,7 +47,7 @@ export default function Note(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`http://localhost:8091/api/v1/note/delete-note/${noteId}`)
+        axios.delete(`api/v1/note/delete-note/${noteId}`)
           .then((response) => {
             console.log(response.data);
             props.del(response.data.data);   // del props' state changed for load all the notes

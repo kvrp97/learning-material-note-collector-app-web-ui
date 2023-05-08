@@ -27,7 +27,7 @@ export default function LogIn() {
 
         if (email.trim().length > 0 && password.trim().length > 0) {
             if (errors === '') {                
-                axios.post('http://localhost:8091/api/v1/user/login',
+                axios.post('api/v1/user/login',
                     {
                         emailAddress: email,
                         password: password

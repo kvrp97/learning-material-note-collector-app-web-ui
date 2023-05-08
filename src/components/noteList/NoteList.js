@@ -41,7 +41,7 @@ export default function NoteList(props) {
   // search for notes
   useEffect(() => {
     if (props.searchInput.length > 0) {
-      axios.get('http://localhost:8091/api/v1/note/search', {
+      axios.get('api/v1/note/search', {
         params: {
           searchKeyword: props.searchInput,
         }
@@ -69,7 +69,7 @@ export default function NoteList(props) {
   }, [props.searchInput])
 
   const loadAllNotes = () => {
-    axios.get('http://localhost:8091/api/v1/note/get-all-notes')
+    axios.get('api/v1/note/get-all-notes')
       .then(function (response) {
         // handle success
         // console.log(response.data);
