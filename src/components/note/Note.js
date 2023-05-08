@@ -80,7 +80,7 @@ export default function Note(props) {
             images?.map(({ noteImageId, imagePath }) => {
               return (
                 <div key={noteImageId} className='img-item'>
-                  <img src={imagePath} alt='img' width={90} />
+                  <img src={imagePath} alt='img'/>
                 </div>
               )
             })
