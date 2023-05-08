@@ -15,6 +15,32 @@
     .update-note-box{        
         width: 75%;
         min-height: 60%;
+        max-height: 90%;
+    }
+
+    .images-container{
+        max-height: 130px !important;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .update-note-box{        
+        width: 78%;
+        min-height: auto;
+        max-height: 88%;
+    }
+
+    .images-container{
+        max-height: 110px !important;
+        overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 320px) {   
+
+    .images-container{
+        max-height: 100px !important;        
+        overflow-y: scroll;
     }
 }
 
@@ -32,12 +58,13 @@
 }
 
 .images-container{
+    position: relative;
     width: 100%;
-    max-height: 170px;
-    overflow-y: auto;
-    overflow-x: auto;
+    max-height: 170px;  
+    overflow-y: auto;  
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     align-items: baseline;
 }
 
