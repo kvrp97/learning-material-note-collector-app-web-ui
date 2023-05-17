@@ -2,9 +2,9 @@
     margin: 0;
 }
 
-.header{
-    position: relative;
-    margin-top: 0;
+.header{    
+    position: sticky;
+    top: 0;
     width: 100%;
     height: auto;
     background-color: #dbf4ff;
