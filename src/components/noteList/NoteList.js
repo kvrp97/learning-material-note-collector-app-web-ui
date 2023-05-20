@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function NoteList(props) {
 
-  const [notes, setNotes] = useState([{}]);
+  const [notes, setNotes] = useState([]);
   const [del, setDel] = useState(false);
   const [update, setUpdate] = useState(0);
 
@@ -86,7 +86,7 @@ export default function NoteList(props) {
 
   return (
     <div className='note-container'>
-      {notes.map((note, index) => {              
+      {notes?.map((note, index) => {              
         return <Note update={handleUpdate} del={deleteToggle} noteId={note.noteId} title={note.title} description={note.description} dateTime={note.dateTime} noteImages={note.noteImages} key={index} />
       }
       )}
