@@ -378,7 +378,7 @@ export default function UpdateNote(props) {
                         {
                             previewImages?.map((image, index) => (
                                 <div className='img' key={index}>
-                                    <img src={image.imagePath} alt="Preview" width={80} max-height={110} />
+                                    <img src={axios.defaults.baseURL + 'api/v1/note/image/' + image.imageName} alt="Preview" width={80} max-height={110} />
                                     <IconButton onClick={() => handleRemoveImages(image, index)} aria-label="delete" size="small" >
                                         <DeleteIcon fontSize="inherit" />
                                     </IconButton>

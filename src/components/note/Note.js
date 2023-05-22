@@ -30,8 +30,8 @@ export default function Note(props) {
     setIsViewerOpen(false);
   };
 
-  const imagesArray = images?.map(({imagePath}, index)=>{
-    return imagePath;
+  const imagesArray = images?.map(({ imageName }, index)=>{
+    return (axios.defaults.baseURL + 'api/v1/note/image/' + imageName);
   })
 
   // delete feature
@@ -95,10 +95,10 @@ export default function Note(props) {
         </div>
         <div className='note-images-container'>
           {
-            images?.map(({ noteImageId, imagePath, imageName }, index) => {
+            images?.map(({ noteImageId, imageName }, index) => {
               return (
                 <div key={noteImageId} className='img-item-container'>
-                  <img className='image' src={imagePath} alt={imageName} key={index} onClick={()=> openImageViewer(index)} />
+                  <img className='image' src={axios.defaults.baseURL + 'api/v1/note/image/' + imageName} alt={imageName} key={index} onClick={()=> openImageViewer(index)} />
                 </div>
               )
             })
