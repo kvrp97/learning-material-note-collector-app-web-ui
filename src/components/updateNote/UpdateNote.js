@@ -13,8 +13,8 @@ export default function UpdateNote(props) {
 
     const { noteId, popupTitle, popupDescription, popupImages, open, handleClose, update } = props;
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [title, setTitle] = useState(popupTitle);
+    const [description, setDescription] = useState(popupDescription);
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [previewSelectedImages, setPreviewSelectedImages] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
@@ -114,7 +114,7 @@ export default function UpdateNote(props) {
             if (title.trim().length > 0 || description.trim().length > 0) {
                 Promise.all([updateNoteTitleAndDescription(), updateNoteByRemovingImage()])
                     .then(response => {
-                        console.log('All requests completed:', response.data);
+                        console.log('All requests completed');
                         update();
                         Swal.fire({
                             position: 'bottom',
@@ -142,7 +142,7 @@ export default function UpdateNote(props) {
             if (title.trim().length > 0 || description.trim().length > 0) {
                 Promise.all([updateNoteTitleAndDescription(), updateNoteByRemovingImage(), updateNoteByAddingImage()])
                     .then(response => {
-                        console.log('All requests completed:', response.data);
+                        console.log('All requests completed');
                         update();
                         Swal.fire({
                             position: 'bottom',
@@ -170,7 +170,7 @@ export default function UpdateNote(props) {
             if (title.trim().length > 0 || description.trim().length > 0) {
                 Promise.all([updateNoteTitleAndDescription(), updateNoteByAddingImage()])
                     .then(response => {
-                        console.log('All requests completed:', response.data);
+                        console.log('All requests completed');
                         update();
                         Swal.fire({
                             position: 'bottom',
@@ -220,8 +220,7 @@ export default function UpdateNote(props) {
                     onClose();
                 })
 
-        } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {
-            console.log("only added images===6");
+        } else if ((title === popupTitle && description === popupDescription) && popupImages.length === previewImages.length && selectedFiles.length !== 0) {            
             updateNoteByAddingImage()
                 .then((response) => {
                     console.log(response.data);

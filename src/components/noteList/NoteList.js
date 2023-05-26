@@ -17,10 +17,34 @@ export default function NoteList(props) {
     setUpdate(update + 1);
   }
 
+  const loadAllNotes = async () => {    
+    await axios({
+      method: 'GET',
+      url: `api/v1/note/get-all-notes/${props.userId}`,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
+        'Access-Control-Allow-Credentials': 'true'
+      }
+    })
+      .then(function (response) {
+        // handle success
+        // console.log(response.data);
+        setNotes(response.data.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
+  }
+
   //initial reloading
   useEffect(() => {
     loadAllNotes();
-  }, [])
+  }, [props.userId])
 
   // adding a note - reloading
   useEffect(() => {
@@ -39,11 +63,19 @@ export default function NoteList(props) {
   }, [update])
 
   // search for notes
-  useEffect(() => {
+  useEffect(() => {    
     if (props.searchInput.length > 0) {
-      axios.get('api/v1/note/search', {
+      axios({
+        method: 'get',
+        url: 'api/v1/note/search',
         params: {
+          userId: props.userId,
           searchKeyword: props.searchInput,
+        },
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Allow-Credentials': 'true'
         }
       })
         .then((response) => {
@@ -66,27 +98,13 @@ export default function NoteList(props) {
     } else {
       loadAllNotes();
     }
-  }, [props.searchInput])
+  }, [props.searchInput, props.userId])
 
-  const loadAllNotes = () => {
-    axios.get('api/v1/note/get-all-notes')
-      .then(function (response) {
-        // handle success
-        // console.log(response.data);
-        setNotes(response.data.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-  }
+
 
   return (
     <div className='note-container'>
-      {notes?.map((note, index) => {              
+      {notes?.map((note, index) => {
         return <Note update={handleUpdate} del={deleteToggle} noteId={note.noteId} title={note.title} description={note.description} dateTime={note.dateTime} noteImages={note.noteImages} key={index} />
       }
       )}

@@ -34,7 +34,7 @@ export default function LogIn() {
                     }
                 )
                     .then(function (response) {
-                        localStorage.setItem('userName', response.data.data);
+                        localStorage.setItem('user', JSON.stringify(response.data.data));
                         localStorage.setItem('loggedWithRemember', rememberMe);
                         localStorage.setItem('logged', true);
 

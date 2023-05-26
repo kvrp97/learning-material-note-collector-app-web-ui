@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../noteApp/NoteApp.css'
 import NoteList from '../../components/noteList/NoteList'
 import Button from '@mui/material/Button';
@@ -16,25 +16,40 @@ export default function NoteApp() {
   const [open, setOpen] = useState(false);
   const [newNote, setNewNote] = useState(0);
   const [searchInput, setSearchInput] = useState('');
+  const [loggedWithRemember, setLoggedWithRemember] = useState();
+  const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState('');
 
   const navigate = useNavigate();
 
-  const userName = localStorage.getItem('userName');
-  const loggedWithRemember = JSON.parse(localStorage.getItem('loggedWithRemember'));
+  useEffect(()=>{
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      setLoggedWithRemember(localStorage.getItem('loggedWithRemember'));
+      setUserId(user.userId);
+      setUserName(user.firstName);
+    } catch (error) {
+      console.log(error);
+      navigate('/login');
+    }
+  },[navigate, loggedWithRemember, userId])
+
 
   // window.addEventListener("unload", (ev) => {
   //   // ev.preventDefault();
   //   // return ev.returnValue = 'Are you sure you want to close?';
   // });
 
-  window.addEventListener('beforeunload', () => {
-    if (!loggedWithRemember) {
+  window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    if (loggedWithRemember === false) {
       localStorage.removeItem('logged');
-      localStorage.removeItem('userName');
+      localStorage.removeItem('user');
     }
   });
 
   const handleClose = () => {
+    console.log(loggedWithRemember);
     setOpen(!open);
   }
 
@@ -60,7 +75,7 @@ export default function NoteApp() {
             timer: 1500
           })
           localStorage.removeItem('loggedWithRemember');
-          localStorage.removeItem('userName');
+          localStorage.removeItem('user');
           localStorage.removeItem('logged');
           navigate('/login');
           // window.location.reload();
@@ -83,7 +98,7 @@ export default function NoteApp() {
             timer: 1500
           })
           localStorage.removeItem('loggedWithRemember');
-          localStorage.removeItem('userName');
+          localStorage.removeItem('user');
           localStorage.removeItem('logged');
           navigate('/login');
         }
@@ -117,10 +132,11 @@ export default function NoteApp() {
           <Button onClick={() => setOpen(true)} variant="contained"><NoteAddIcon className='note-icon' />New Note</Button>
         </div>
       </div>
-
-      <NoteList new={newNote} searchInput={searchInput}/>
-
-      <AddNote open={open} handleClose={handleClose} save={saveNew} />
+      {
+        userId && 
+        <NoteList new={newNote} searchInput={searchInput} userId={userId}/>
+      }
+      <AddNote open={open} handleClose={handleClose} save={saveNew} userId={userId}/>
     </div>
   )
 }

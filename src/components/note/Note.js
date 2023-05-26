@@ -35,8 +35,7 @@ export default function Note(props) {
   })
 
   // delete feature
-  const deleteNote = () => {
-    console.log(images);
+  const deleteNote = () => {    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
