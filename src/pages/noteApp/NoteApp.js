@@ -25,14 +25,14 @@ export default function NoteApp() {
   useEffect(()=>{
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      setLoggedWithRemember(localStorage.getItem('loggedWithRemember'));
+      setLoggedWithRemember(JSON.parse(localStorage.getItem('loggedWithRemember')));
       setUserId(user.userId);
       setUserName(user.firstName);
     } catch (error) {
       console.log(error);
       navigate('/login');
     }
-  },[navigate, loggedWithRemember, userId])
+  },[navigate, loggedWithRemember])
 
 
   // window.addEventListener("unload", (ev) => {
@@ -48,8 +48,7 @@ export default function NoteApp() {
     }
   });
 
-  const handleClose = () => {
-    console.log(loggedWithRemember);
+  const handleClose = () => {    
     setOpen(!open);
   }
 
