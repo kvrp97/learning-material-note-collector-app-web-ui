@@ -12,7 +12,7 @@ import '@fontsource/roboto/700.css';
 import axios from 'axios';
 
 // axios.defaults.baseURL = 'http://13.126.175.133:8080/note-collector-app-api-0.0.1-SNAPSHOT/';
-axios.defaults.baseURL = 'http://192.168.8.190:8091/';
+axios.defaults.baseURL = 'http://localhost:8091/';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

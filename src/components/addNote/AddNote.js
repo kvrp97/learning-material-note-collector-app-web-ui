@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 
 export default function AddNote(props) {
 
-  const { open, handleClose, save } = props;
+  const { open, handleClose, save, userId } = props;
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -51,6 +51,7 @@ export default function AddNote(props) {
     e.preventDefault();
 
     const formData = new FormData();
+    formData.append("userId", userId);
     formData.append("title", title);
     formData.append("description", description);
 
