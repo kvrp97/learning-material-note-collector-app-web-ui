@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import '../signUp/SignUp.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import Swal from 'sweetalert2'
 import axios from 'axios';
 
@@ -19,6 +24,10 @@ export default function SignUp() {
     password: '',
     confirmPassword: '',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleFirstNameChange = (event) => {
     setFirstName(event.target.value);
@@ -184,12 +193,23 @@ export default function SignUp() {
                 onChange={handlePasswordChange}
                 className='txt'
                 label="Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 helperText={errors.password}
                 error={Boolean(errors.password)}
                 required
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }}
               />
-            </div><br />
+            </div><br />            
             <div>
               <TextField
                 value={confirmPassword}

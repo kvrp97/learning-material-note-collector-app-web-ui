@@ -2,6 +2,10 @@ import '../login/LogIn.css';
 import React from 'react'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Switch from '@mui/material/Switch';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +18,10 @@ export default function LogIn() {
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
     const [errors, setErrors] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    
     const navigate = useNavigate();
 
     const handleEmailChange = (event) => {
@@ -91,10 +99,21 @@ export default function LogIn() {
                             className='txt'
                             id="outlined-password-input"
                             label="Password"
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
                             required
+                            InputProps={{
+                                endAdornment: <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    edge="end"
+                                  >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                              }}
                         />
                     </div>
                     <div className='switch-container'>
